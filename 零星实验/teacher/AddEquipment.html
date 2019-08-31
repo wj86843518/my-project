@@ -12,13 +12,13 @@
     <title>物理实验管理</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
-    <link rel="stylesheet" href="../assets/style/common.css">
-    <link rel="stylesheet" href="../assets/style/ui-style.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
 
     <!-- 引入组件 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
-    <script src="../lib/lodash.js"></script>
+    <script src="../../lib/lodash.js"></script>
     <style type="text/css">
         .van-search {
             padding: 0px 12px;
@@ -73,12 +73,16 @@
             color: #34A1ED;
         }
 
+        .font-weight-500 {
+            font-weight: 500;
+        }
+
     </style>
 </head>
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="器材查询"
+            title="添加器材"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
@@ -106,13 +110,15 @@
             </van-cell>
         </div>
         <div v-if="showType === 2" class="res-part">
-            <van-cell v-for="(item, key) in resList" :key="key" :is-link="true" :center="true"
+            <van-cell v-for="(item, key) in resList" :key="key" :center="true"
                       @click="clickResItem(item)">
                 <div slot="title">
-                    <p class="my-cell-title">{{item.name}}</p>
-                    <p class="my-cell-label">编号 <span>{{item.code}}</span></p>
+                    <p class="my-cell-title font-weight-500">{{item.name}}</p>
+                    <p class="my-cell-label"><span>{{item.code}}</span></p>
                 </div>
-                <span class="my-cell-value">{{item.use}}/{{item.total}}</span>
+                <div>
+                    <van-stepper v-model="value" min="0" integer/>
+                </div>
             </van-cell>
         </div>
     </div>
@@ -128,7 +134,8 @@ new Vue({
 		searchValue: '',
 		showType: 1,    // 1 为模糊 部分    2 为结果部分
 		fuzzyList: [],
-		resList: []
+		resList: [],
+		value: ''
 	},
 	mounted () {
 
@@ -149,8 +156,9 @@ new Vue({
 				this.getResList(val)
 			}
 		},
-		onCancel () {
+		onCancel (val) {
 			console.log('取消')
+			console.log(this.searchValue)
 			this.showType = 2
 		},
 		searchFocus () {
@@ -179,11 +187,14 @@ new Vue({
 			this.showSpin = true
 			// call api
 			this.resList = [
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1}
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0}
 			]
 			this.showSpin = false
 		}

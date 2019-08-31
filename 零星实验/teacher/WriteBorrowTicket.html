@@ -18,7 +18,16 @@
     <!-- 引入组件 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <script src="../../lib/moment.js"></script>
+
     <style type="text/css">
+        .van-cell__title {
+            font-size: 15px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
         .container {
             width: 100%;
             height: 100%;
@@ -31,6 +40,42 @@
         .content {
             flex-grow: 1;
             overflow: auto;
+        }
+
+        .van-cell__value {
+            font-size: 15px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+        }
+
+        .submit {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .submit-btn {
+            width: 60%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .cancel {
+            text-align: center;
+        }
+
+        .cancel-btn {
+            width: 60%;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(153, 153, 153, 1);
+            background-color: transparent;
+            border: none;
         }
 
     </style>
@@ -46,9 +91,41 @@
     </van-nav-bar>
     <div class="content">
         <van-cell-group title="器材列表">
-            <van-cell title="添加器材" is-link="true" />
+            <van-cell title="添加器材" is-link="true"/>
         </van-cell-group>
+        <van-cell-group title="借用时间">
+            <van-cell title="开始时间" @click="showStart=true" arrow-direction="down" is-link="true"
+                      :value="startDate"></van-cell>
+            <van-cell title="结束时间" @click="showEnd=true" arrow-direction="down" is-link="true"
+                      :value="endDate"></van-cell>
+        </van-cell-group>
+        <div class="submit">
+            <van-button class="submit-btn" color="#3B93FF">提交</van-button>
+        </div>
+        <div class="cancel">
+            <van-button class="cancel-btn" type="default">取消申请</van-button>
+        </div>
     </div>
+    <van-popup v-model="showStart" position="bottom">
+        <van-datetime-picker
+                v-model="start"
+                type="date"
+                :min-date="startMinDate"
+                :max-date="startMaxDate"
+                @confirm="startConfirm"
+                @cancel="showStart=false"
+        />
+    </van-popup>
+    <van-popup v-model="showEnd" position="bottom">
+        <van-datetime-picker
+                v-model="end"
+                type="date"
+                :min-date="endMinDate"
+                :max-date="endMaxDate"
+                @confirm="endConfirm"
+                @cancel="showEnd=false"
+        />
+    </van-popup>
     <div class="loading" v-if="showSpin">
         <van-loading type="spinner" color="#1989fa" :vertical="true"/>
     </div>
@@ -57,7 +134,17 @@
 new Vue({
 	el: '#app',
 	data: {
-		showSpin: false
+		showSpin: false,
+		start: new Date(),
+		end: new Date(),
+		startDate: '',
+		endDate: '',
+		showStart: false,
+		showEnd: false,
+		startMinDate: new Date(2018, 0, 1),
+		startMaxDate: new Date(2050, 0, 1),
+		endMinDate: new Date(2018, 0, 1),
+		endMaxDate: new Date(2050, 0, 1)
 	},
 	mounted () {
 
@@ -65,6 +152,16 @@ new Vue({
 	methods: {
 		onClickLeft () {
 			console.log('返回')
+		},
+		startConfirm (val) {
+			this.showStart = false
+			this.endMinDate = val
+			this.startDate = moment(val).format('YYYY-MM-DD')
+		},
+		endConfirm (val) {
+			this.showEnd = false
+			this.startMaxDate = val
+			this.endDate = moment(val).format('YYYY-MM-DD')
 		}
 	}
 })
