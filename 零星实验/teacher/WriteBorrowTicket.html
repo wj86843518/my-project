@@ -12,28 +12,13 @@
     <title>物理实验管理</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
-    <link rel="stylesheet" href="../assets/style/common.css">
-    <link rel="stylesheet" href="../assets/style/ui-style.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
 
     <!-- 引入组件 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
     <style type="text/css">
-        /*cell*/
-        .van-cell__title {
-            font-size: 15px;
-            color: #333333;
-            font-family: PingFang SC;
-            font-weight: 500;
-            width: 65%;
-            flex: none;
-        }
-
-        .van-cell__value {
-            font-size: 15px;
-            color: #666666;
-        }
-
         .container {
             width: 100%;
             height: 100%;
@@ -48,34 +33,20 @@
             overflow: auto;
         }
 
-        .sub-title {
-            font-size: 13px;
-            color: #666666;
-            height: 40px;
-            line-height: 40px;
-            padding: 0px 8px;
-        }
-
     </style>
 </head>
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="物品详情"
+            title="填写借用单"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
     >
     </van-nav-bar>
     <div class="content">
-        <van-cell-group title="基础信息">
-            <van-cell title="名称" :value="detail.name"></van-cell>
-            <van-cell title="规格" value="内容"></van-cell>
-            <van-cell title="编号" value="内容"></van-cell>
-        </van-cell-group>
-        <van-cell-group title="其他">
-            <van-cell title="状态" value="闲置"></van-cell>
-            <van-cell title="位置" value="第三准备室3柜"></van-cell>
+        <van-cell-group title="器材列表">
+            <van-cell title="添加器材" is-link="true" />
         </van-cell-group>
     </div>
     <div class="loading" v-if="showSpin">
@@ -86,10 +57,7 @@
 new Vue({
 	el: '#app',
 	data: {
-		showSpin: false,
-		detail: {
-			name: '自定义'
-		}
+		showSpin: false
 	},
 	mounted () {
 

@@ -11,20 +11,6 @@
     color: #333333;
 }
 
-/*cell*/
-.van-cell__title {
-    font-size: 15px;
-    color: #333333;
-    font-family: PingFang SC;
-    font-weight: 500;
-    width: 65%;
-    flex: none;
-}
-
-.van-cell__value {
-    font-size: 15px;
-    color: #666666;
-}
 
 /*// loading*/
 .loading {
