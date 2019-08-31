@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../assets/style/common.css">
+    <link rel="stylesheet" href="../assets/style/ui-style.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <style type="text/css">
+        /*搜索*/
+        .van-search {
+            padding: 0px 0px 0px 10px;
+        }
+
+        /*分割线*/
+        .van-divider {
+            margin: 16px auto;
+            width: 140px;
+            border-color: #8E8E8E;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-part {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 5px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+        }
+
+        .scan {
+            width: 40px;
+            display: flex;
+        }
+
+        .scan-icon {
+            width: 24px;
+            height: 24px;
+            margin: auto;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-flow: row nowrap;
+            overflow: auto;
+        }
+
+        .left {
+            overflow: auto;
+            flex-basis: 30%;
+            height: 100%;
+            background-color: #EFEFEF;
+        }
+
+        .right {
+            overflow: auto;
+            flex-basis: 70%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .item-class {
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .active-class {
+            background-color: white;
+            position: relative;
+        }
+
+        .active-class:before {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 18px;
+            width: 4px;
+            background-color: #45A9FD;
+        }
+
+        .sub-title {
+            font-size: 14px;
+            height: 20px;
+            font-weight: bold;
+            line-height: 20px;
+            text-align: center;
+            color: #333333;
+        }
+
+        .item-content {
+            height: 40px;
+            line-height: 40px;
+            font-size: 15px;
+            margin: 0 10px;
+            display: flex;
+            flex-flow: row nowrap;
+            color: #333333;
+        }
+
+        .name {
+            flex-basis: 60%;
+            flex-shrink: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .specification {
+            margin-left: 10px;
+        }
+
+        .useNum {
+            flex-basis: 40%;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            title="器材查询"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    >
+    </van-nav-bar>
+    <div class="search-part">
+        <van-search class="search-bar" :readonly="true" shape="round" placeholder="请输入器材类别编号或名称"
+                    @click="handleClick"></van-search>
+        <div class="scan">
+            <img @click="handleScan" class="scan-icon" src="../assets/img/icon-scan.png" alt="">
+        </div>
+    </div>
+    <div class="van-hairline--top"></div>
+    <div class="content">
+        <div class="left">
+            <ul>
+                <li v-for="(item, key) in dataList" :key="key"
+                    :class="['item-class', {'active-class' :  key === activeIdx}]"
+                    @click="selectLeftItem(key, item)">
+                    {{item.bigName}}
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div v-for="(item1, key1) in activeItem.bigList" :key="key1">
+                <van-divider><p class="sub-title"> {{item1.smallName}}</p></van-divider>
+                <ul>
+                    <li v-for="(item2, key2) in item1.smallList" :key="key2">
+                        <a class="item-content van-hairline--bottom" @click="clickItem(item2)">
+                            <p class="name">{{item2.name}} <span class="specification">({{item2.specification}})</span>
+                            </p>
+                            <p class="useNum">{{item2.useNum}}</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		// 当前选中的item
+		activeIdx: 0,
+		activeItem: [],
+		showSpin: false,
+		dataList: [
+			{
+				bigName: '大类一',
+				id: 1,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 1, name: '名称名称名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称名称名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名名称名称名称称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'},
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类二',
+				id: 2,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类三',
+				id: 3,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类一',
+				id: 1,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'},
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类二',
+				id: 2,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类三',
+				id: 3,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类一',
+				id: 1,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'},
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类二',
+				id: 2,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类三',
+				id: 3,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类一',
+				id: 1,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'},
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类二',
+				id: 2,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类三',
+				id: 3,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类一',
+				id: 1,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'},
+							{id: 1, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 2, name: '名称', specification: '规格', useNum: '0/2'},
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类二',
+				id: 2,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			},
+			{
+				bigName: '大类三',
+				id: 3,
+				bigList: [
+					{
+						smallName: '小类一',
+						smallList: [
+							{id: 3, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 4, name: '名称', specification: '规格', useNum: '1/2'},
+							{id: 5, name: '名称', specification: '规格', useNum: '5/8'},
+							{id: 6, name: '名称', specification: '规格', useNum: '可用数'},
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					},
+					{
+						smallName: '小类二',
+						smallList: [
+							{id: 7, name: '名称', specification: '规格', useNum: '12/12'}
+						]
+					}
+				]
+			}
+		]
+	},
+	mounted () {
+		// call api
+		this.getData()
+
+	},
+	methods: {
+		getData () {
+			// ...
+			this.activeIdx = 0
+			this.activeItem = this.dataList[0]
+		},
+		onClickLeft () {
+			console.log('返回')
+		},
+		handleClick () {
+			console.log('跳转到搜索页面')
+		},
+		handleScan () {
+			console.log('扫码')
+		},
+		selectLeftItem (key, item) {
+			this.activeIdx = key
+			this.activeItem = item
+			console.log(item)
+		},
+		clickItem (item) {
+			console.log('跳转到详情页面')
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>

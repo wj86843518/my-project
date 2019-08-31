@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../assets/style/common.css">
+    <link rel="stylesheet" href="../assets/style/ui-style.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <style type="text/css">
+        .van-search {
+            padding: 0px 12px;
+        }
+
+        /*取消*/
+        .van-search__action {
+            font-size: 14px;
+            font-family: PingFang SC;
+            font-weight: 500;
+            color: rgba(59, 141, 253, 1);
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /*background-color: #F7F7F7;*/
+        }
+
+        .content {
+            flex-grow: 1;
+            overflow: auto;
+            display: flex;
+        }
+
+        .fuzzy-part {
+            background-color: white;
+            flex-grow: 1;
+            overflow: auto;
+        }
+
+        .res-part {
+            background-color: white;
+            flex-grow: 1;
+            overflow: auto;
+        }
+
+        .cell-title {
+            padding-left: 30px;
+        }
+
+        .cell-class {
+            font-size: 15px;
+            font-family: PingFang SC;
+            font-weight: 500;
+        }
+
+        .color-blue {
+            color: #34A1ED;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            title="器材查询"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    ></van-nav-bar>
+    <form action="/">
+        <van-search
+                v-model="searchValue"
+                placeholder="请输入器材类别编号或名称"
+                show-action
+                shape="round"
+                @search="onSearch"
+                @cancel="onCancel"
+                @focus="searchFocus"
+        ></van-search>
+    </form>
+    <div class="content">
+        <div v-if="showType === 1" class="fuzzy-part">
+            <van-cell v-for="(item, key) in fuzzyList" @click="clickFuzzyItem">
+                <p slot="title" class="cell-title">
+                    <span class="cell-class"
+                          :class="{'color-blue' : item.nameLeft === searchValue}">{{item.nameLeft}}</span><span
+                        class="cell-class">{{item.nameRight}}</span>
+                </p>
+            </van-cell>
+        </div>
+        <div v-if="showType === 2" class="res-part">
+            <van-cell v-for="(item, key) in resList" :key="key" :is-link="true" :center="true"
+                      @click="clickResItem(item)">
+                <div slot="title">
+                    <p class="my-cell-title">{{item.name}}</p>
+                    <p class="my-cell-label">编号 <span>{{item.code}}</span></p>
+                </div>
+                <span class="my-cell-value">{{item.use}}/{{item.total}}</span>
+            </van-cell>
+        </div>
+    </div>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		showSpin: false,
+		searchValue: '',
+		showType: 1,    // 1 为模糊 部分    2 为结果部分
+		fuzzyList: [],
+		resList: []
+	},
+	mounted () {
+
+	},
+	watch: {
+		searchValue (newVal) {
+			if (newVal) this.getFuzzyList(newVal)
+		}
+	},
+	methods: {
+		onClickLeft () {
+			console.log('返回')
+		},
+		onSearch (val) {
+			console.log('search', val)
+			this.showType = 2
+			if (val) {
+				this.getResList(val)
+			}
+		},
+		onCancel () {
+			console.log('取消')
+			this.showType = 2
+		},
+		searchFocus () {
+			this.showType = 1
+		},
+		clickFuzzyItem (item) {
+			this.showType = 2
+			this.getResList(item)
+		},
+		clickResItem (item) {
+			console.log('跳转页面')
+		},
+		getFuzzyList: _.debounce(function (val) {
+			console.log(val)
+			this.fuzzyList = [
+				{name: '滑轮', id: 1},
+				{name: '滑动变阻器', id: 1},
+				{name: '滑滑梯', id: 1}
+			]
+			this.fuzzyList.forEach(item => {
+				item.nameLeft = item.name.slice(0, this.searchValue.length)
+				item.nameRight = item.name.slice(this.searchValue.length)
+			})
+		}, 500),
+		getResList (val) {
+			this.showSpin = true
+			// call api
+			this.resList = [
+				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1}
+			]
+			this.showSpin = false
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>

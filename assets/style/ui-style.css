@@ -1,0 +1,47 @@
+/*header*/
+.van-nav-bar .van-icon {
+    color: #676767;
+    font-size: 20px;
+}
+
+.van-nav-bar__title {
+    font-size: 17px;
+    font-family: PingFang SC;
+    font-weight: bold;
+    color: #333333;
+}
+
+/*cell*/
+.van-cell__title {
+    font-size: 15px;
+    color: #333333;
+    font-family: PingFang SC;
+    font-weight: 500
+}
+
+.van-cell__value {
+    font-size: 15px;
+    color: #666666;
+}
+
+/*// loading*/
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.van-loading {
+    height: 100%;
+}
+
+.van-loading__spinner {
+    margin: auto;
+}
