@@ -31,6 +31,29 @@
         .content {
             flex-grow: 1;
             overflow: auto;
+            background-color: white;
+        }
+
+        .state1 {
+            font-family: PingFang SC;
+            font-weight: 500;
+            font-size: 15px;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .state2 {
+            font-family: PingFang SC;
+            font-weight: 500;
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        .color-orange {
+            color: rgba(255, 119, 29, 1);
+        }
+
+        .color-red {
+            color: #F23535;
         }
 
     </style>
@@ -45,14 +68,14 @@
     >
     </van-nav-bar>
     <div class="content">
-        <van-cell v-for="(item, key) in list" :key="key" :is-link="true" :center="true" @click="handleClick(item)">
+        <van-cell v-for="(item, key) in list" :key="key" :center="true" @click="handleClick(item)">
             <div slot="title">
                 <p class="my-cell-title">{{item.name}}</p>
                 <p class="my-cell-label">申请时间： <span>{{item.time}}</span></p>
             </div>
-            <div class="my-cell-value">
-                <p class="state1">{{item.state1}}</p>
-                <p class="state2">{{item.state2}}</p>
+            <div>
+                <p class="state1" :class="{'color-orange' : item.state1 === '1'}">{{stateObj1[item.state1]}}</p>
+                <p class="state2" :class="{'color-red' : item.state2}">{{stateObj2[item.state2]}}</p>
             </div>
         </van-cell>
     </div>
@@ -61,12 +84,23 @@
     </div>
 </div>
 <script>
-// state 1 为 申请中   2为准备中  3为准备完成  4为使用中（超期）  5为使用中  6为已归还  7为已归还（有损）
 new Vue({
 	el: '#app',
 	data: {
 		showSpin: false,
-		list: []
+		list: [],
+		stateObj1: {
+			1: '申请中',
+			2: '准备中',
+			3: '准备完成',
+			4: '使用中',
+			5: '申请中',
+			6: '已归还',
+		},
+		stateObj2: {
+			1: '(超期)',
+			2: '(有损)'
+		}
 	},
 	mounted () {
 		this.getData()
@@ -81,11 +115,14 @@ new Vue({
 			this.list = [
 				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '1', state2: ''},
 				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '2', state2: ''},
-				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state: '3', state2: ''},
-				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state: '4', state2: '超期'},
-				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state: '5', state2: ''},
-				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state: '6', state2: ''},
-				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state: '6', state2: '有损'}
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '3', state2: ''},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '4', state2: '1'},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '5', state2: ''},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '6', state2: ''},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '6', state2: '2'},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '5', state2: ''},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '6', state2: ''},
+				{id: 1, name: '打点计时器*1小车*2滑轮*3滑滑梯*4', time: '2019-07-21 13:00', state1: '6', state2: '2'}
 			]
 			this.showSpin = false
 		}

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ac76aae-edd8-4a73-b21d-7cadc64492bb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/assets/style/common.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/style/common.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/零星实验/teacher/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/零星实验/teacher/Index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,20 +35,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="common.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/style/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+            <state relative-caret-position="166">
+              <caret line="106" column="24" lean-forward="true" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="49" column="40" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
+            <state relative-caret-position="275">
+              <caret line="120" column="105" lean-forward="true" selection-start-line="120" selection-start-column="105" selection-end-line="120" selection-end-column="105" />
             </state>
           </provider>
         </entry>
@@ -85,6 +86,7 @@
       <find>onSearch</find>
       <find>clickResItem</find>
       <find>my-cell-title</find>
+      <find>state1</find>
     </findStrings>
     <replaceStrings>
       <replace>dataList</replace>
@@ -111,9 +113,9 @@
         <option value="$PROJECT_DIR$/search/Search.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Index.vue" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Index.html" />
         <option value="$PROJECT_DIR$/assets/style/ui-style.css" />
         <option value="$PROJECT_DIR$/assets/style/common.css" />
+        <option value="$PROJECT_DIR$/零星实验/teacher/Index.html" />
       </list>
     </option>
   </component>
@@ -228,12 +230,12 @@
       <updated>1566996767500</updated>
       <workItem from="1566996768763" duration="9286000" />
       <workItem from="1567078867033" duration="11074000" />
-      <workItem from="1567225778420" duration="5687000" />
+      <workItem from="1567225778420" duration="6620000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26047000" />
+    <option name="totallyTimeSpent" value="26980000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -410,13 +412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="49" column="40" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/style/ui-style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -426,8 +421,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/style/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="166">
+          <caret line="106" column="24" lean-forward="true" selection-start-line="106" selection-start-column="24" selection-end-line="106" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="120" column="105" lean-forward="true" selection-start-line="120" selection-start-column="105" selection-end-line="120" selection-end-column="105" />
         </state>
       </provider>
     </entry>
