@@ -102,6 +102,9 @@ html, body {
     font-family: PingFang SC;
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .my-cell-label {

@@ -16,7 +16,9 @@
     font-size: 15px;
     color: #333333;
     font-family: PingFang SC;
-    font-weight: 500
+    font-weight: 500;
+    width: 65%;
+    flex: none;
 }
 
 .van-cell__value {
