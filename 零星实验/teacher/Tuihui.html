@@ -136,7 +136,7 @@
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="填写借用单"
+            title="退回"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
@@ -160,38 +160,18 @@
         </van-cell-group>
         <p class="add-more" v-if="equipmentList.length > 0" @click="handleAddMore">添加更多</p>
         <van-cell-group title="借用时间">
-            <van-cell class="date-class" title="开始时间" @click="showStart=true" arrow-direction="down" is-link="true"
+            <van-cell class="date-class" title="开始时间"
                       :value="startDate"></van-cell>
-            <van-cell class="date-class" title="结束时间" @click="showEnd=true" arrow-direction="down" is-link="true"
+            <van-cell class="date-class" title="结束时间"
                       :value="endDate"></van-cell>
         </van-cell-group>
         <div class="submit">
             <van-button class="submit-btn" color="#3B93FF" :disabled="canSubmit" @click="handleSubmit">提交</van-button>
         </div>
         <div class="cancel">
-            <van-button class="cancel-btn" type="default" @click="handleCancel">取消申请</van-button>
+            <van-button class="cancel-btn" type="default" @click="handleCancel">撤销</van-button>
         </div>
     </div>
-    <van-popup v-model="showStart" position="bottom">
-        <van-datetime-picker
-                v-model="start"
-                type="date"
-                :min-date="startMinDate"
-                :max-date="startMaxDate"
-                @confirm="startConfirm"
-                @cancel="showStart=false"
-        />
-    </van-popup>
-    <van-popup v-model="showEnd" position="bottom">
-        <van-datetime-picker
-                v-model="end"
-                type="date"
-                :min-date="endMinDate"
-                :max-date="endMaxDate"
-                @confirm="endConfirm"
-                @cancel="showEnd=false"
-        />
-    </van-popup>
     <div class="loading" v-if="showSpin">
         <van-loading type="spinner" color="#1989fa" :vertical="true"/>
     </div>
@@ -203,18 +183,10 @@ new Vue({
 		showSpin: false,
 		startDate: '',  // 开始时间
 		endDate: '', // 结束时间
-		start: new Date(),   // 开始时间组件的  value
-		end: new Date(),  // 结束时间组件的  value
-		showStart: false,  // 显示开始时间弹框
-		showEnd: false,  // 显示结束时间弹框
-		startMinDate: new Date(2018, 0, 1), // 开始时间组件的  设置最小时间
-		startMaxDate: new Date(2050, 0, 1),  // 开始时间组件的  设置最大时间
-		endMinDate: new Date(2018, 0, 1),   // 结束时间组件的  设置最小时间
-		endMaxDate: new Date(2050, 0, 1), // 结束时间组件的  设置最大时间
 		equipmentList: []
 	},
 	mounted () {
-
+		this.getData()
 	},
 	computed: {
 		canSubmit () {
@@ -237,13 +209,14 @@ new Vue({
 				{name: '小车', unit: '辆', counts: 30, id: 1},
 				{name: '砝码', unit: '10g/个', counts: 40, id: 1}
 			]
+			this.startDate = '2019-08-31'  //给cell 赋值
+			this.endDate = '2019-09-21'  //给cell 赋值
 		},
 		onClickLeft () {
 			console.log('返回')
 		},
 		handleAddMore () {
 			console.log('添加器材, 跳转页面到AddEquipment.html')
-			this.getData()
 		},
 		startConfirm (val) {
 			this.showStart = false

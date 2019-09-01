@@ -96,7 +96,8 @@
                 @search="onSearch"
                 @focus="searchFocus"
         >
-            <p slot="action" @click="onCancel">取消</p>
+            <p slot="action" v-if="showSearchBtn === 'cancel'" @click="onCancel">取消</p>
+            <p slot="action" v-if="showSearchBtn === 'ok'" @click="onConfirm">确认</p>
         </van-search>
     </form>
     <div class="content">
@@ -110,15 +111,12 @@
             </van-cell>
         </div>
         <div v-if="showType === 2" class="res-part">
-            <van-cell v-for="(item, key) in resList" :key="key" :center="true"
-                      @click="clickResItem(item)">
+            <van-cell v-for="(item, key) in resList" :key="key" :center="true">
                 <div slot="title">
                     <p class="my-cell-title font-weight-500">{{item.name}}</p>
                     <p class="my-cell-label"><span>{{item.code}}</span></p>
                 </div>
-                <div>
-                    <van-stepper v-model="value" min="0" integer/>
-                </div>
+                <van-stepper v-model="item.count" min="0" integer :max="item.max"/>
             </van-cell>
         </div>
     </div>
@@ -140,6 +138,20 @@ new Vue({
 	mounted () {
 
 	},
+	computed: {
+		showSearchBtn () {
+			// 为结果页面
+			if (this.showType === 2) {
+				// 判断是否有数据大于1
+				let flag = this.resList.some(item => {
+					return item.count !== 0
+				})
+				return flag ? 'ok' : 'cancel'
+			} else {  // 为模糊页面
+				return 'cancel'
+			}
+		}
+	},
 	watch: {
 		searchValue (newVal) {
 			if (newVal) this.getFuzzyList(newVal)
@@ -156,10 +168,13 @@ new Vue({
 				this.getResList(val)
 			}
 		},
-		onCancel (val) {
+		onCancel () {
 			console.log('取消')
-			console.log(this.searchValue)
 			this.showType = 2
+		},
+		onConfirm () {
+			console.log('添加完毕， 跳转页面')
+			console.log(this.resList)
 		},
 		searchFocus () {
 			this.showType = 1
@@ -167,9 +182,6 @@ new Vue({
 		clickFuzzyItem (item) {
 			this.showType = 2
 			this.getResList(item)
-		},
-		clickResItem (item) {
-			console.log('跳转页面')
 		},
 		getFuzzyList: _.debounce(function (val) {
 			console.log(val)
@@ -185,16 +197,16 @@ new Vue({
 		}, 500),
 		getResList (val) {
 			this.showSpin = true
-			// call api
 			this.resList = [
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0},
-				{name: '打点计时器', code: '2349843543', id: 1, count: 0}
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1}
 			]
 			this.showSpin = false
 		}

@@ -33,3 +33,9 @@
 .van-loading__spinner {
     margin: auto;
 }
+
+/*btn*/
+.van-button{
+    height: 40px;
+    line-height: 38px;
+}
