@@ -12,13 +12,13 @@
     <title>物理实验管理</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
-    <link rel="stylesheet" href="../assets/style/common.css">
-    <link rel="stylesheet" href="../assets/style/ui-style.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
 
     <!-- 引入组件 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
-    <script src="../lib/lodash.js"></script>
+    <script src="../../lib/lodash.js"></script>
     <style type="text/css">
         .van-search {
             padding: 0px 12px;
@@ -73,12 +73,31 @@
             color: #34A1ED;
         }
 
+        .font-weight-500 {
+            font-weight: 500;
+        }
+
+        .submit {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            width: 60%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+        }
+
     </style>
 </head>
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="器材查询"
+            title="选择实验"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
@@ -92,7 +111,8 @@
                 @search="onSearch"
                 @focus="searchFocus"
         >
-            <p slot="action" class="color-blue" @click="onCancel">取消</p>
+            <p slot="action" v-if="showSearchBtn === 'cancel'" @click="onCancel">取消</p>
+            <p slot="action" v-if="showSearchBtn === 'ok'" @click="onConfirm">确定</p>
         </van-search>
     </form>
     <div class="content">
@@ -106,14 +126,16 @@
             </van-cell>
         </div>
         <div v-if="showType === 2" class="res-part">
-            <van-cell v-for="(item, key) in resList" :key="key" :is-link="true" :center="true"
-                      @click="clickResItem(item)">
+            <van-cell v-for="(item, key) in resList" :key="key" :center="true">
                 <div slot="title">
-                    <p class="my-cell-title">{{item.name}}</p>
-                    <p class="my-cell-label">编号 <span>{{item.code}}</span></p>
+                    <p class="my-cell-title font-weight-500">{{item.name}}</p>
+                    <p class="my-cell-label"><span>{{item.code}}</span></p>
                 </div>
-                <span class="my-cell-value">{{item.use}}/{{item.total}}</span>
+                <van-stepper v-model="item.count" min="0" integer :max="item.max"/>
             </van-cell>
+            <div class="submit" v-if="showSearchBtn === 'ok'">
+                <van-button class="submit-btn" color="#3B93FF" @click="handleSubmit">添加</van-button>
+            </div>
         </div>
     </div>
     <div class="loading" v-if="showSpin">
@@ -128,10 +150,25 @@ new Vue({
 		searchValue: '',
 		showType: 1,    // 1 为模糊 部分    2 为结果部分
 		fuzzyList: [],
-		resList: []
+		resList: [],
+		value: ''
 	},
 	mounted () {
 
+	},
+	computed: {
+		showSearchBtn () {
+			// 为结果页面
+			if (this.showType === 2) {
+				// 判断是否有数据大于1
+				let flag = this.resList.some(item => {
+					return item.count !== 0
+				})
+				return flag ? 'ok' : 'cancel'
+			} else {  // 为模糊页面
+				return 'cancel'
+			}
+		}
 	},
 	watch: {
 		searchValue (newVal) {
@@ -153,15 +190,16 @@ new Vue({
 			console.log('取消')
 			this.showType = 2
 		},
+		onConfirm () {
+			console.log('添加完毕， 跳转页面')
+			console.log(this.resList)
+		},
 		searchFocus () {
 			this.showType = 1
 		},
 		clickFuzzyItem (item) {
 			this.showType = 2
 			this.getResList(item)
-		},
-		clickResItem (item) {
-			console.log('跳转页面')
 		},
 		getFuzzyList: _.debounce(function (val) {
 			console.log(val)
@@ -177,15 +215,21 @@ new Vue({
 		}, 500),
 		getResList (val) {
 			this.showSpin = true
-			// call api
 			this.resList = [
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1}
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 10},
+				{name: '打点计时器', code: '2349843543', id: 1, count: 0, max: 1}
 			]
 			this.showSpin = false
+		},
+		handleSubmit () {
+			console.log('添加， 跳转页面')
 		}
 	}
 })

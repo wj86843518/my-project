@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
     <style type="text/css">
         .van-cell__title {
-            width: 70%;
+            width: 75%;
             flex: none;
         }
 
@@ -58,17 +58,23 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .cell-name {
             font-size: 15px;
             font-weight: 500;
             color: rgba(51, 51, 51, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .cell-class {
             margin-top: -2px;
-            margin-left: 10px;
+            margin-left: 2px;
         }
 
         .cell-class-content {
@@ -126,7 +132,7 @@
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="器材借用"
+            title="物理实验室管理"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
@@ -142,7 +148,7 @@
         </van-search>
     </form>
     <div class="content">
-        <van-cell v-for="(item, key) in list" :key="key" class="my-cell" :center="true" @click="clickItem">
+        <van-cell v-for="(item, key) in list" :key="key" class="my-cell" :center="true" @click="clickItem(item)">
             <div slot="title" class="cell-title">
                 <van-image class="title-img"
                            width="45"
@@ -152,7 +158,7 @@
                 ></van-image>
                 <div class="title-right">
                     <div class="title-first-row">
-                        <p class="cell-name">{{item.name}}</p>
+                        <p class="cell-name">{{item.name}} <span>({{item.experimentName}})</span></p>
                         <p class="cell-class"><span class="cell-class-content"
                                                     :class="{'color1': item.class === '高一', 'color2' : item.class==='高二', 'color3' : item.class === '高三'}">{{item.class}}</span>
                         </p>
@@ -203,43 +209,62 @@ new Vue({
 			this.getData(val)
 		},
 		getData () {
+			this.showSpin = true
 			this.list = [
 				{
 					url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1567263490548&di=b62c74efad16ce8d3aedcbf5608f7aec&imgtype=0&src=http%3A%2F%2Fpics3.baidu.com%2Ffeed%2F80cb39dbb6fd5266cf6c3802c9a1bd2ed507369a.jpeg%3Ftoken%3D187e8633836f52e1cecb4216b651efad%26s%3D52927487026036B16434988903007023',
-					name: '小红', class: '高三', time: '2019-08-21 12:33', status1: '1', status2: ''
+					name: '小红',
+					experimentName: '加速度研究实验',
+					class: '高三',
+					time: '2019-08-21 12:332019-08-21 12:332019-08-21 12:33',
+					status1: '1',
+					status2: ''
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高二', time: '2019-08-21 12:33', status1: '2', status2: ''
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '2', status2: ''
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高一', time: '2019-08-21 12:33', status1: '3', status2: ''
+					name: '小凡', experimentName: '加速度研究实验', class: '高一', time: '2019-08-21 12:33', status1: '3', status2: ''
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高三', time: '2019-08-21 12:33', status1: '4', status2: ''
+					name: '小凡', experimentName: '加速度研究实验', class: '高三', time: '2019-08-21 12:33', status1: '4', status2: ''
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高三', time: '2019-08-21 12:33', status1: '4', status2: '1'
+					name: '小凡', experimentName: '加速度研究实验', class: '高三', time: '2019-08-21 12:33', status1: '4', status2: '1'
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: ''
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: ''
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: '2'
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: '2'
 				},
 				{
 					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
-					name: '小凡', class: '高二', time: '2019-08-21 12:33', status1: '6', status2: ''
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '6', status2: ''
+				},
+				{
+					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: ''
+				},
+				{
+					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '5', status2: '2'
+				},
+				{
+					url: 'https://img.yzcdn.cn/vant/cat.jpeg',
+					name: '小凡', experimentName: '加速度研究实验', class: '高二', time: '2019-08-21 12:33', status1: '6', status2: ''
 				}
 			]
+			this.showSpin = false
 		},
 		clickItem (item) {
-            console.log('跳转页面', item)
+			console.log('跳转页面', item)
 		}
 	}
 })

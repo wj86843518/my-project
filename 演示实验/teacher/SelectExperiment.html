@@ -12,24 +12,17 @@
     <title>物理实验管理</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
-    <link rel="stylesheet" href="../assets/style/common.css">
-    <link rel="stylesheet" href="../assets/style/ui-style.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
 
     <!-- 引入组件 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
-    <script src="../lib/lodash.js"></script>
+    <script src="../../lib/lodash.js"></script>
     <style type="text/css">
-        .van-search {
-            padding: 0px 12px;
-        }
-
-        /*取消*/
-        .van-search__action {
-            font-size: 14px;
-            font-family: PingFang SC;
-            font-weight: 500;
-            color: rgba(59, 141, 253, 1);
+        .van-cell__title {
+            width: 70%;
+            flex: none;
         }
 
         .container {
@@ -38,13 +31,13 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            /*background-color: #F7F7F7;*/
+            background-color: #F7F7F7;
         }
 
         .content {
             flex-grow: 1;
             overflow: auto;
-            display: flex;
+            background-color: white;
         }
 
         .fuzzy-part {
@@ -59,18 +52,41 @@
             overflow: auto;
         }
 
-        .cell-title {
+        .cell-title1 {
             padding-left: 30px;
         }
 
-        .cell-class {
+        .cell-class1 {
             font-size: 15px;
             font-family: PingFang SC;
             font-weight: 500;
         }
 
+        .cell-title2 {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cell-label2 {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .color-blue {
             color: #34A1ED;
+        }
+
+        .icon-edit {
+            width: 18px;
+            height: 18px;
         }
 
     </style>
@@ -78,16 +94,17 @@
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            title="器材查询"
+            title="选择实验"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
-    ></van-nav-bar>
+    >
+    </van-nav-bar>
     <form action="/">
         <van-search
                 v-model="searchValue"
-                placeholder="请输入器材类别编号或名称"
-                show-action
+                placeholder="搜索实验名称"
+                :show-action="showType === 1"
                 shape="round"
                 @search="onSearch"
                 @focus="searchFocus"
@@ -98,21 +115,23 @@
     <div class="content">
         <div v-if="showType === 1" class="fuzzy-part">
             <van-cell v-for="(item, key) in fuzzyList" @click="clickFuzzyItem">
-                <p slot="title" class="cell-title">
-                    <span class="cell-class"
+                <p slot="title" class="cell-title1">
+                    <span class="cell-class1"
                           :class="{'color-blue' : item.nameLeft === searchValue}">{{item.nameLeft}}</span><span
                         class="cell-class">{{item.nameRight}}</span>
                 </p>
             </van-cell>
         </div>
         <div v-if="showType === 2" class="res-part">
-            <van-cell v-for="(item, key) in resList" :key="key" :is-link="true" :center="true"
+            <van-cell v-for="(item, key) in resList" :key="key" :center="true"
                       @click="clickResItem(item)">
                 <div slot="title">
-                    <p class="my-cell-title">{{item.name}}</p>
-                    <p class="my-cell-label">编号 <span>{{item.code}}</span></p>
+                    <p class="cell-title2">{{item.name}}</p>
+                    <p class="cell-label2"><span>{{item.code}}</span></p>
                 </div>
-                <span class="my-cell-value">{{item.use}}/{{item.total}}</span>
+                <div class="edit" @click.stop="handleEdit(item)">
+                    <img class="icon-edit" src="../../assets/img/icon-edit.png" alt="">
+                </div>
             </van-cell>
         </div>
     </div>
@@ -126,7 +145,7 @@ new Vue({
 	data: {
 		showSpin: false,
 		searchValue: '',
-		showType: 1,    // 1 为模糊 部分    2 为结果部分
+		showType: 1,
 		fuzzyList: [],
 		resList: []
 	},
@@ -142,6 +161,9 @@ new Vue({
 		onClickLeft () {
 			console.log('返回')
 		},
+		searchFocus () {
+			this.showType = 1
+		},
 		onSearch (val) {
 			console.log('search', val)
 			this.showType = 2
@@ -153,22 +175,19 @@ new Vue({
 			console.log('取消')
 			this.showType = 2
 		},
-		searchFocus () {
-			this.showType = 1
-		},
 		clickFuzzyItem (item) {
 			this.showType = 2
 			this.getResList(item)
 		},
 		clickResItem (item) {
-			console.log('跳转页面')
+			console.log('选中，跳转页面', item)
 		},
 		getFuzzyList: _.debounce(function (val) {
 			console.log(val)
 			this.fuzzyList = [
-				{name: '滑轮', id: 1},
-				{name: '滑动变阻器', id: 1},
-				{name: '滑滑梯', id: 1}
+				{name: '加速度探究实验1', id: 1},
+				{name: '加速度探究实验2', id: 1},
+				{name: '加速度探究实验3', id: 1}
 			]
 			this.fuzzyList.forEach(item => {
 				item.nameLeft = item.name.slice(0, this.searchValue.length)
@@ -179,13 +198,16 @@ new Vue({
 			this.showSpin = true
 			// call api
 			this.resList = [
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1},
-				{name: '打点计时器', code: '2349843543', id: 1, total: 2, use: 1}
+				{name: '打点计时器打点计时器打点计时器打点计时器打点计时器打点计时器', code: '打点计时器*1、砝码*2、小车*3打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1}
 			]
 			this.showSpin = false
+		},
+		handleEdit (item) {
+			console.log('编辑，跳转页面', item)
 		}
 	}
 })

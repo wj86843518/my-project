@@ -19,9 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
     <style type="text/css">
-        .my-cell .van-cell__title {
+        .van-cell__title {
             font-size: 15px;
-            font-family: PingFang SC;
             font-weight: 500;
             color: rgba(51, 51, 51, 1);
             flex: none;
@@ -40,24 +39,21 @@
         .content {
             flex-grow: 1;
             overflow: auto;
-            padding-bottom: 20px;
         }
 
         .cell-title {
-            display: flex;
-            align-items: center;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .cell-title-name {
+        .title-name {
             font-size: 15px;
             font-weight: 500;
             color: rgba(51, 51, 51, 1);
         }
 
-        .cell-title-unit {
+        .title-unit {
             margin-left: 10px;
             font-size: 15px;
             font-weight: 500;
@@ -66,29 +62,9 @@
 
         .cell-value {
             font-size: 15px;
-            font-weight: bold;
-            color: #333333;
-        }
-
-        .date-class .van-cell__value {
-            font-size: 15px;
             font-weight: 500;
-            color: rgba(102, 102, 102, 1);
+            color: rgba(51, 51, 51, 1);
         }
-
-        .confirm {
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .confirm-btn {
-            width: 60%;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 1);
-        }
-
     </style>
 </head>
 <body>
@@ -101,24 +77,15 @@
     >
     </van-nav-bar>
     <div class="content">
-        <van-cell-group title="器材列表">
-            <van-cell v-for="(item, key) in equipmentList" :key="key" class="my-cell">
+        <van-cell-group title="名称、规格、数量">
+            <van-cell v-for="(item, key) in list" :key="key">
                 <div slot="title" class="cell-title">
-                    <span class="cell-title-name">{{item.name}}</span>
-                    <span class="cell-title-unit">({{item.unit}})</span>
+                    <span class="title-name">{{item.name}}</span>
+                    <span class="title-unit">({{item.unit}})</span>
                 </div>
                 <p class="cell-value">{{item.counts}}</p>
             </van-cell>
         </van-cell-group>
-        <van-cell-group title="借用时间">
-            <van-cell class="date-class" title="开始时间" @click="showStart=true"
-                      :value="startDate"></van-cell>
-            <van-cell class="date-class" title="结束时间" @click="showEnd=true"
-                      :value="endDate"></van-cell>
-        </van-cell-group>
-        <div class="confirm">
-            <van-button class="confirm-btn" color="#3B93FF" @click="handleReceive">{{btnContent}}</van-button>
-        </div>
     </div>
     <div class="loading" v-if="showSpin">
         <van-loading type="spinner" color="#1989fa" :vertical="true"/>
@@ -129,37 +96,23 @@ new Vue({
 	el: '#app',
 	data: {
 		showSpin: false,
-		equipmentList: [],
-		startDate: '',
-		endDate: '',
 		title: '',
-		btnContent: ''
+		list: []
 	},
 	mounted () {
-		this.getDate()
+		this.getData()
 	},
 	methods: {
 		onClickLeft () {
 			console.log('返回')
 		},
-		getDate () {
-			this.showSpin = true
-			this.title = '徐锐'
-            this.btnContent = '接收' // 八种状态
-			this.equipmentList = [
-				{name: '小车', unit: '辆', counts: 10, id: 1},
-				{name: '小车', unit: '辆', counts: 20, id: 1},
-				{name: '小车', unit: '辆', counts: 30, id: 1},
-				{name: '砝码', unit: '10g/个', counts: 40, id: 1},
-				{name: '小车', unit: '辆', counts: 30, id: 1},
-				{name: '砝码', unit: '10g/个', counts: 40, id: 1}
+		getData () {
+			this.title = '加速度研究实验'
+			this.list = [
+				{name: '小车', unit: '辆', counts: 10},
+				{name: '砝码', unit: '10g/个', counts: 10},
+				{name: '滑轮', unit: '个', counts: 10}
 			]
-			this.startDate = '2019-08-31'  //给cell 赋值
-			this.endDate = '2019-09-21'  //给cell 赋值
-			this.showSpin = false
-		},
-		handleReceive () {
-
 		}
 	}
 })
