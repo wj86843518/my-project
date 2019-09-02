@@ -19,6 +19,17 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
     <style type="text/css">
+        .van-field__label {
+            width: 80%;
+        }
+
+        .van-field__control {
+            text-align: right;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+        }
+
         .van-cell__title {
             font-size: 15px;
             font-weight: 500;
@@ -46,7 +57,7 @@
         .content {
             flex-grow: 1;
             overflow: auto;
-            margin-bottom: 80px;
+            margin-bottom: 110px;
         }
 
         .cell-title {
@@ -74,11 +85,24 @@
             color: rgba(51, 51, 51, 1);
         }
 
-        .scan {
+        .input-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .field-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            margin-left: 5px;
+        }
+
+        .btn-group {
             text-align: center;
             position: fixed;
             width: 100%;
-            bottom: 20px;
+            bottom: 10px;
         }
 
         .scan-btn {
@@ -88,11 +112,21 @@
             font-family: PingFang SC;
             font-weight: bold;
             color: rgba(255, 255, 255, 1);
+            margin-top: 10px;
         }
 
         .icon-scan {
             width: 18px;
             display: block;
+        }
+
+        .submit-btn {
+            width: 60%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>
@@ -107,20 +141,22 @@
     </van-nav-bar>
     <div class="content">
         <van-cell-group title="填写损坏数量">
-            <van-cell v-for="(item, key) in list" :key="key" class="bad-cell">
-                <div slot="title" class="cell-title">
-                    <span class="title-name">{{item.name}}</span>
-                    <span class="title-unit">({{item.unit}})</span>
-                </div>
-                <p class="cell-value">{{item.counts}}</p>
-            </van-cell>
-            <!--      <van-field v-model="dataSource.counts" v-for="(item, key) in list" :key="key">
-                      <p slot="label">
-                          {{item.name}} <span class="field-subtitle">(item.unit)</span>
-                      </p>
-                  </van-field>-->
+            <!-- <van-cell v-for="(item, key) in list" :key="key" class="bad-cell">
+                 <div slot="title" class="cell-title">
+                     <span class="title-name">{{item.name}}</span>
+                     <span class="title-unit">({{item.unit}})</span>
+                 </div>
+                 <p class="cell-value">{{item.counts}}</p>
+             </van-cell>-->
+            <van-field v-model="item.counts" v-for="(item, key) in list" :key="key">
+                <p slot="label" class="input-label">
+                    {{item.name}} <span class="field-subtitle">({{item.unit}})</span>
+                </p>
+            </van-field>
         </van-cell-group>
-        <div class="scan">
+        <div class="btn-group">
+            <van-button class="submit-btn" color="#3B93FF" @click="handleSubmit" :disabled="list.length === 0">确认
+            </van-button>
             <van-button class="scan-btn" color="#3B93FF" @click="handleScan">
                 <img src="../../assets/img/icon-scan-white.png" class="icon-scan" alt="">
                 <p>扫码添加损坏器材</p>
@@ -154,6 +190,9 @@ new Vue({
 				{name: '滑轮', unit: '个', counts: 10}
 			]
 			this.showSpin = false
+		},
+		handleSubmit () {
+			console.log('确认', this.list)
 		},
 		handleScan () {
 			this.getData()

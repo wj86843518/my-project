@@ -202,7 +202,7 @@ new Vue({
 	el: '#app',
 	data: {
 		title: '',
-		type: '1',  // 1 为新建申请  2为申请中
+		type: '2',  // 1 为新建申请  2为申请中
 		submitBtn: '',
 		cancelBtn: '',
 		showSpin: false,
@@ -226,7 +226,11 @@ new Vue({
 	},
 	computed: {
 		canSubmit () {
-
+			if (this.experiment.name && this.counts && this.grade && this.startDate && this.endDate) {
+				return false
+			} else {
+				return true
+			}
 		}
 	},
 	mounted () {
