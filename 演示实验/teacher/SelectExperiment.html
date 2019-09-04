@@ -126,8 +126,9 @@
             <van-cell v-for="(item, key) in resList" :key="key" :center="true"
                       @click="clickResItem(item)">
                 <div slot="title">
-                    <p class="cell-title2">{{item.name}}</p>
-                    <p class="cell-label2"><span>{{item.code}}</span></p>
+                    <p class="cell-title2">{{item.name}}<span v-if="item.editFlag">({{item.editPerson}})</span></p>
+                    <p class="cell-label2" v-if="!item.editFlag"><span>{{item.content}}</span></p>
+                    <p class="cell-label2" v-if="item.editFlag"><span>{{item.editContent}}</span></p>
                 </div>
                 <div class="edit" @click.stop="handleEdit(item)">
                     <img class="icon-edit" src="../../assets/img/icon-edit.png" alt="">
@@ -198,11 +199,14 @@ new Vue({
 			this.showSpin = true
 			// call api
 			this.resList = [
-				{name: '打点计时器打点计时器打点计时器打点计时器打点计时器打点计时器', code: '打点计时器*1、砝码*2、小车*3打点计时器*1、砝码*2、小车*3', id: 1},
-				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
-				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
-				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1},
-				{name: '打点计时器', code: '打点计时器*1、砝码*2、小车*3', id: 1}
+				{
+					name: '加速度研究实验1', content: '打点计时器*1、砝码*2、小车*3打点计时器*1、砝码*2、小车*3', id: 1,
+					editFlag: true, editContent: '新增滑轮12个，砝码20个', editPerson: '小明'     // 学生实验 新建申请用到
+				},
+				{name: '加速度研究实验2', content: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '加速度研究实验3', content: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '加速度研究实验4', content: '打点计时器*1、砝码*2、小车*3', id: 1},
+				{name: '加速度研究实验5', content: '打点计时器*1、砝码*2、小车*3', id: 1}
 			]
 			this.showSpin = false
 		},

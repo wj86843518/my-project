@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <style type="text/css">
+        .van-cell__title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            flex: none;
+            width: 65%;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7F7F7;
+        }
+
+        .content {
+            flex-grow: 1;
+            overflow: auto;
+        }
+
+        .cell-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .title-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .title-unit {
+            margin-left: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #999999;
+        }
+
+        .cell-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .tip-class {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            height: 30px;
+            line-height: 30px;
+            margin-left: 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            :title="title"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    >
+    </van-nav-bar>
+    <div class="content">
+        <van-cell-group title="名称、规格、数量">
+            <van-cell v-for="(item, key) in list" :key="key">
+                <div slot="title" class="cell-title">
+                    <span class="title-name">{{item.name}}</span>
+                    <span class="title-unit">({{item.unit}})</span>
+                </div>
+                <p class="cell-value">{{item.counts}}</p>
+            </van-cell>
+        </van-cell-group>
+        <p class="tip-class">每班级{{counts}}套</p>
+    </div>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		showSpin: false,
+		title: '',
+		list: [],
+		counts: 0
+	},
+	mounted () {
+		this.getData()
+	},
+	methods: {
+		onClickLeft () {
+			console.log('返回')
+		},
+		getData () {
+			this.showSpin = true
+			this.title = '加速度研究实验'
+			this.list = [
+				{name: '小车', unit: '辆', counts: 10},
+				{name: '砝码', unit: '10g/个', counts: 10},
+				{name: '滑轮', unit: '个', counts: 10}
+			]
+			this.counts = 25
+			this.showSpin = false
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>

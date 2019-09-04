@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <script src="../../lib/moment.js"></script>
+    <script src="../../lib/lodash.js"></script>
+    <style type="text/css">
+
+        .special-cell .van-cell__title {
+            width: 70%;
+            flex: none;
+        }
+
+        .arrangement-cell .van-cell__title {
+            width: 75%;
+            flex: none;
+        }
+
+        .van-cell__title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .van-field__label {
+            width: 80%;
+        }
+
+        .van-field__control {
+            text-align: right;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7F7F7;
+        }
+
+        .content {
+            flex-grow: 1;
+            overflow: auto;
+            padding-bottom: 20px;
+        }
+
+        .cell-class .van-cell__value {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1) !important;
+        }
+
+        .cell-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cell-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .field-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            margin-left: 5px;
+        }
+
+        .arrangement-content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .arrangement-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .arrangement-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+        }
+
+        .lesson-item {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+        }
+
+        .lesson-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .m-t-20 {
+            margin-top: 20px;
+        }
+
+        .submit {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .submit-btn {
+            width: 60%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: PingFang SC;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .confirm-content {
+            padding: 20px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            :title="title"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    >
+    </van-nav-bar>
+    <div class="content">
+        <van-cell-group title="实验名称" class="special-cell">
+            <van-cell @click="experimentDetail" is-link="true" :center="true" value="">
+                <div slot="title">
+                    <p class="cell-title">{{experiment.name}}</p>
+                    <p class="cell-label"> {{experiment.content}}</p>
+                </div>
+            </van-cell>
+        </van-cell-group>
+        <van-cell-group title="申请信息">
+            <van-field v-model="counts" :readonly="true">
+                <p slot="label">
+                    数量 <span class="field-subtitle" v-if="experiment.name">目前最大可用数量为{{experiment.maxCount}}</span>
+                </p>
+            </van-field>
+            <van-cell class="cell-class" title="年级" :value="grade"></van-cell>
+            <van-cell class="cell-class" title="开始时间" :value="startDate"></van-cell>
+            <van-cell class="cell-class" title="结束时间" :value="endDate"></van-cell>
+        </van-cell-group>
+        <van-cell-group class="m-t-20">
+            <van-cell class="special-cell">
+                <div slot="title" class="arrangement-content">
+                    <p class="arrangement-name">实验安排</p>
+                </div>
+                <p class="arrangement-value">{{arrangementObj.arranged}}/{{arrangementObj.total}}</p>
+            </van-cell>
+            <van-cell class="arrangement-cell" :is-link="true" v-for="(item, key) in experimentList" :center="true"
+                      @click="handleLesson(item)">
+                <div slot="title">
+                    <span class="lesson-item">{{item.grade}}</span>
+                    <span class="lesson-item">{{item.class}}</span>
+                    <span class="lesson-item">{{item.name}}</span>
+                    <span class="lesson-item">{{item.date}}</span>
+                    <span class="lesson-item">{{item.week}}</span>
+                    <span class="lesson-item">{{item.lessonDate}}</span>
+                </div>
+                <p class="lesson-value">{{statusObj[item.status]}}</p>
+            </van-cell>
+        </van-cell-group>
+        <div class="submit">
+            <van-button class="submit-btn" color="#3B93FF" @click="handleFinish">安排完成
+            </van-button>
+        </div>
+    </div>
+    <van-dialog
+            v-model="showConfirm"
+            title="确认通知"
+            :show-cancel-button="true"
+            cancel-button-text="取消"
+            cancel-button-color="#000000"
+            confirm-button-text="确定"
+            confirm-button-color="#3B93FF"
+            @confirm="dialogConfirm"
+            @cancel="dialogCancel"
+    >
+        <p class="confirm-content">是否确认"{{title}}"演示实验准备完成，点击确认后，会通知申请人领取。</p>
+    </van-dialog>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		title: '',
+		showSpin: false,
+		person: '',
+		experiment: {},
+		counts: '',
+		grade: '',
+		startDate: '',  // 开始时间
+		endDate: '', // 结束时间
+		arrangementObj: {},
+		experimentList: [],
+		statusObj: {1: '未完成', 2: '完成', 3: '有损'},
+		showConfirm: false
+	},
+	mounted () {
+		this.type = '1'
+		this.getData()
+		this.title = `${this.person} (${this.experiment.name})`
+	},
+	methods: {
+		onClickLeft () {
+			console.log('返回')
+		},
+		getData () {
+			this.showSpin = true
+			let res = {
+				experiment: {name: '加速度探究实验', content: '打点计时器*1、打点计时器*1、打点计时器*1、打点计时器*1', maxCount: 10},
+				person: '小凡',
+				grade: '高二',
+				gradeKey: 2,
+				counts: 8,
+				startDate: '2019-08-31',
+				endDate: '2019-09-21',
+				total: 15,
+				arranged: 3,
+				experimentList: [
+					{grade: '高三', class: '12班', name: '徐锐', date: '07-14', week: '周四', lessonDate: '上午第三节课', status: '1'},
+					{grade: '高三', class: '12班', name: '徐锐', date: '07-14', week: '周四', lessonDate: '上午第三节课', status: '1'},
+					{grade: '高三', class: '12班', name: '徐锐', date: '07-14', week: '周四', lessonDate: '上午第三节课', status: '1'}
+				]
+
+			}
+			this.experiment = res.experiment
+			this.person = res.person
+			this.grade = res.grade
+			this.counts = res.counts
+			this.startDate = res.startDate  //给cell 赋值
+			this.endDate = res.endDate  //给cell 赋值
+			this.arrangementObj.total = res.total
+			this.arrangementObj.arranged = res.arranged
+			this.experimentList = res.experimentList
+			this.showSpin = false
+		},
+		experimentDetail () {
+			console.log('器材列表页面')
+		},
+		handleLesson (item) {
+			console.log(item)
+		},
+		handleFinish () {
+			this.showConfirm = true
+		},
+		dialogConfirm () {
+			console.log('确定')
+		},
+		dialogCancel () {
+			console.log('取消')
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>

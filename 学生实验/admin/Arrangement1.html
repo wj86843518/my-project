@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css" rel="stylesheet">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/js/swiper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-awesome-swiper@3.1.2/dist/vue-awesome-swiper.js"></script>
+    <style type="text/css">
+        .van-dialog__header {
+            padding-top: 0px;
+        }
+
+        .van-dialog__content {
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7F7F7;
+        }
+
+        .content {
+            flex-grow: 1;
+            overflow: auto;
+        }
+
+        .swiper-container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .swiper-content {
+            overflow: auto;
+            width: 100%;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0px;
+        }
+
+        .table thead tr td {
+            border-top: 0px;
+        }
+
+        .table td {
+            text-align: center;
+            border: 0.5px solid #DBDBDB;
+            height: 50px;
+            width: 13.14%;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .table tr td:first-child {
+            border-left: 0px !important;
+            width: 8%;
+        }
+
+        .table tr td:last-of-type {
+            border-right: 0px !important;
+        }
+
+        .table tr:last-of-type td {
+            /*border-bottom: 0px !important;*/
+        }
+
+        .table thead p {
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .font-size-16 {
+            font-size: 16px;
+        }
+
+        .count-item {
+            position: relative;
+            color: white;
+            background-color: #F98282;
+            width: 100%;
+            height: 100%;
+        }
+
+        .count-min {
+            position: absolute;
+            left: 30%;
+            top: 10%;
+        }
+
+        .count-line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .count-line-content {
+            transform: rotate(15deg);
+            font-size: 24px;
+        }
+
+        .count-max {
+            position: absolute;
+            right: 30%;
+            bottom: 10%;
+        }
+
+        .dialog-title-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .dialog-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .dialog-back, .dialog-cross {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .class-content {
+            padding: 15px 15px 0px;
+        }
+
+        .color-grey {
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .color-blue {
+            color: rgba(15, 143, 251, 1);
+        }
+
+        .bg-light-blue {
+            background: rgba(241, 248, 255, 1) !important;
+        }
+
+        .class-cell {
+            margin-top: 10px;
+            background: rgba(246, 246, 246, 1);
+            border-radius: 10px;
+        }
+
+        .class-cell .van-cell__title {
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .class-cell-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .p-b-15 {
+            padding-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            :title="title"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    >
+    </van-nav-bar>
+    <div class="content">
+        <local-swiper ref="awesomeSwiperB" :options="swiperOptionB">
+            <local-slide style="flex-direction: column" v-for="(item1, key1) in dataList" :key="key1">
+                <div class="swiper-content">
+                    <table cellpadding="0" cellspacing="0" class="table">
+                        <thead>
+                        <td>
+                            <p>时</p>
+                            <p>间</p>
+                        </td>
+                        <td>
+                            <p>周一</p>
+                            <p>{{item1.dateList[0]}}</p>
+                        </td>
+                        <td>
+                            <p>周二</p>
+                            <p>{{item1.dateList[1]}}</p>
+                        </td>
+                        <td>
+                            <p>周三</p>
+                            <p>{{item1.dateList[2]}}</p>
+                        </td>
+                        <td>
+                            <p>周四</p>
+                            <p>{{item1.dateList[3]}}</p>
+                        </td>
+                        <td>
+                            <p>周五</p>
+                            <p>{{item1.dateList[4]}}</p>
+                        </td>
+                        <td width="13.14%">
+                            <p>周六</p>
+                            <p>{{item1.dateList[5]}}</p>
+                        </td>
+                        <td>
+                            <p>周日</p>
+                            <p>{{item1.dateList[6]}}</p>
+                        </td>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item2, key2) in item1.list" :key="key2">
+                            <td>
+                                <p class="font-size-16">{{key2 + 1}}</p>
+                            </td>
+                            <td @click="handleClick(item3)" v-for="(item3, key) in item2.list">
+                                <p v-if="item3.classNameList.length === 1">{{item3.classNameList[0]}}</p>
+                                <div v-if="item3.classNameList.length > 1" class="count-item">
+                                    <div class="count-min">
+                                        {{item3.min}}
+                                    </div>
+                                    <div class="count-line">
+                                        <div class="count-line-content">/</div>
+                                    </div>
+                                    <div class="count-max">
+                                        {{item3.max}}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </local-slide>
+        </local-swiper>
+        <van-dialog
+                v-model="showDialog"
+                class="class-content"
+                @confirm="handleDialogConfirm"
+                :show-confirm-button="currentType === '1'"
+        >
+            <div slot="title" class="dialog-title-content">
+                <div v-if="currentType === '2'" class="dialog-back" @click="handleDialogBack">
+                    <van-icon name="arrow-left"/>
+                </div>
+                <div v-if="currentType === '1'" style="width: 20px;height: 24px"></div>
+                <p class="dialog-title">安排实验地点</p>
+                <div class="dialog-cross" @click="handleDialogClose">
+                    <van-icon name="cross"/>
+                </div>
+            </div>
+            <div v-if="currentType === '1'">
+                <van-cell v-for="(item, key) in classList" :title="item.name" class="class-cell" :is-link="true"
+                          :class="{'bg-light-blue': item.location}" @click="handleDialogClass(item)">
+                    <p class="class-cell-value color-blue" v-if="item.location">{{item.location}}</p>
+                    <p class="class-cell-value color-grey" v-else>未设置</p>
+                </van-cell>
+            </div>
+            <div class="p-b-15" v-if="currentType === '2'">
+                <van-radio-group v-model="radio">
+                    <van-cell v-for="(item, key) in locationList" :key="key" :title="item"
+                              class="class-cell" :class="{'bg-light-blue' : item === radio}">
+                        <van-radio @click="handleDialogLocation" slot="right-icon" :name="item"/>
+                    </van-cell>
+                </van-radio-group>
+            </div>
+        </van-dialog>
+    </div>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+Vue.use(VueAwesomeSwiper)
+new Vue({
+	el: '#app',
+	components: {
+		LocalSwiper: VueAwesomeSwiper.swiper,
+		LocalSlide: VueAwesomeSwiper.swiperSlide
+	},
+	data: {
+		showSpin: false,
+		title: '',
+		mySwiper: '',
+		dataList: [],
+		showDialog: false,
+		// 显示 dialog的返回
+		showDialogBack: false,
+		// dialog 1为显示 班级  2为显示地点
+		currentType: '1',
+		// 选择班级的list
+		classList: [],
+		// dialog 点击班级 ==>  赋值给当前班级
+		currentClass: {},
+		// 选择地点的list
+		locationList: [],
+		radio: ''
+	},
+	computed: {
+		swiperOptionB: {
+			loop: false,
+			pagination: {
+				el: '.swiper-pagination',
+				dynamicBullets: true
+			}
+		},
+		swiperB () {
+			return this.$refs.awesomeSwiperB.swiper
+		}
+	},
+	mounted () {
+		this.title = '实验安排(高三)'
+		this.getData()
+	},
+	methods: {
+		onClickLeft () {
+			console.log('返回')
+		},
+		getData () {
+			this.showSpin = true
+			this.dataList = [
+				{
+					dateList: ['', '07-12', '', '', '07-15', '', ''],
+					list: [
+						{
+							list: [{
+								id: 1,
+								classNameList: ['1班'],
+								grade: '高三',
+								locationList: ['科学楼405', '科学楼406', '科学楼409'],
+								min: '',
+								max: '',
+								fix: false
+							},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 3,
+									max: 3,
+									fix: true
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								}]
+						},
+						{
+							list: [{
+								id: 1,
+								classNameList: ['1班'],
+								grade: '高三',
+								locationList: ['科学楼405', '科学楼406', '科学楼409'],
+								min: '',
+								max: '',
+								fix: false
+							},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 3,
+									max: 3,
+									fix: true
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								}]
+						}
+					]
+				},
+				{
+					dateList: ['', '07-12', '', '', '07-15', '', ''],
+					list: [
+						{
+							list: [{
+								id: 1,
+								classNameList: ['1班'],
+								grade: '高三',
+								locationList: ['科学楼405', '科学楼406', '科学楼409'],
+								min: '',
+								max: '',
+								fix: false
+							},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 3,
+									max: 3,
+									fix: true
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								}]
+						},
+						{
+							list: [{
+								id: 1,
+								classNameList: ['1班'],
+								grade: '高三',
+								locationList: ['科学楼405', '科学楼406', '科学楼409'],
+								min: '',
+								max: '',
+								fix: false
+							},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 3,
+									max: 3,
+									fix: true
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: [],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: '',
+									max: '',
+									fix: false
+								},
+								{
+									id: 1,
+									classNameList: ['1班', '2班', '12班'],
+									grade: '高三',
+									locationList: ['科学楼405', '科学楼406', '科学楼409'],
+									min: 0,
+									max: 3,
+									fix: false
+								}]
+						}
+					]
+				}
+			]
+			this.showSpin = false
+		},
+		handleClick (item) {
+			// 如果没有安排的
+			if (!item.fix && item.classNameList.length > 0) {
+				this.showDialog = true
+				// 生成班级list
+				item.classNameList.forEach(item1 => {
+					this.classList.push({name: `${item.grade}${item1}`, location: ''})
+				})
+				// 生成location list
+				this.locationList = item.locationList
+			}
+		},
+		// dialog  在location 页面时点击 后退按钮
+		handleDialogBack () {
+			this.currentType = '1'
+			this.radio = ''
+		},
+		// dialog   关闭
+		handleDialogClose () {
+			this.showDialog = false
+			this.classList = []
+			this.currentType = '1'
+		},
+		// dialog 点击班级
+		handleDialogClass (item) {
+			this.currentType = '2'
+			this.currentClass = item
+			this.radio = item.location
+		},
+		handleDialogLocation () {
+			this.currentType = '1'
+			this.currentClass.location = this.radio
+		},
+		handleDialogConfirm () {
+			let tmp = this.classList
+			this.currentType = '1'
+			this.classList = []
+			console.log(tmp)
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>

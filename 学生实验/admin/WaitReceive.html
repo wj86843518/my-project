@@ -27,6 +27,11 @@
             flex: none;
         }
 
+        .arrangement-cell .van-cell__title {
+            width: 75%;
+            flex: none;
+        }
+
         .van-cell__title {
             font-size: 15px;
             font-weight: 500;
@@ -82,6 +87,13 @@
             white-space: nowrap;
         }
 
+        .field-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            margin-left: 5px;
+        }
+
         .submit {
             text-align: center;
             margin-top: 50px;
@@ -111,19 +123,13 @@
             border: none;
         }
 
-        .field-subtitle {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(153, 153, 153, 1);
-            margin-left: 5px;
-        }
 
     </style>
 </head>
 <body>
 <div id="app" class="container">
     <van-nav-bar
-            :title="title"
+            title="申请中"
             left-arrow
             @click-left="onClickLeft"
             :border="false"
@@ -131,9 +137,7 @@
     </van-nav-bar>
     <div class="content">
         <van-cell-group title="实验名称" class="special-cell">
-            <van-cell v-if="!experiment.name" class="cell-class" title="请选择" @click="chooseExperiment"
-                      is-link="true" value=""></van-cell>
-            <van-cell v-if="experiment.name" @click="chooseExperiment" is-link="true" :center="true" value="">
+            <van-cell @click="experimentDetail" is-link="true" :center="true" value="">
                 <div slot="title">
                     <p class="cell-title">{{experiment.name}}</p>
                     <p class="cell-label"> {{experiment.content}}</p>
@@ -141,58 +145,23 @@
             </van-cell>
         </van-cell-group>
         <van-cell-group title="申请信息">
-            <van-field v-model="counts">
+            <van-field v-model="counts" :readonly="true">
                 <p slot="label">
                     数量 <span class="field-subtitle" v-if="experiment.name">目前最大可用数量为{{experiment.maxCount}}</span>
                 </p>
             </van-field>
-            <van-cell class="cell-class" title="年级" @click="showClass=true" arrow-direction="down" is-link="true"
-                      :value="grade"></van-cell>
-            <van-cell class="cell-class" title="开始时间" @click="showStart=true" arrow-direction="down" is-link="true"
-                      :value="startDate"></van-cell>
-            <van-cell class="cell-class" title="结束时间" @click="showEnd=true" arrow-direction="down" is-link="true"
-                      :value="endDate"></van-cell>
+            <van-cell class="cell-class" title="年级" :value="grade"></van-cell>
+            <van-cell class="cell-class" title="开始时间" :value="startDate"></van-cell>
+            <van-cell class="cell-class" title="结束时间" :value="endDate"></van-cell>
         </van-cell-group>
-
         <div class="submit">
-            <van-button class="submit-btn" color="#3B93FF" :disabled="canSubmit" @click="handleSubmit">{{submitBtn}}
+            <van-button class="submit-btn" color="#3B93FF" @click="handleReady">去准备
             </van-button>
         </div>
         <div class="cancel">
-            <van-button class="cancel-btn" type="default" @click="handleCancel">{{cancelBtn}}</van-button>
+            <van-button class="cancel-btn" type="default" @click="handleCancel">返回</van-button>
         </div>
     </div>
-    <van-popup v-model="showClass" position="bottom">
-        <van-picker
-                v-model="grade"
-                :default-index="gradeDefaultIndex"
-                value-key="name"
-                show-toolbar
-                :columns="gradeColumns"
-                @cancel="showClass = false"
-                @confirm="onConfirmGrade"
-        />
-    </van-popup>
-    <van-popup v-model="showStart" position="bottom">
-        <van-datetime-picker
-                v-model="start"
-                type="date"
-                :min-date="startMinDate"
-                :max-date="startMaxDate"
-                @confirm="startConfirm"
-                @cancel="showStart=false"
-        />
-    </van-popup>
-    <van-popup v-model="showEnd" position="bottom">
-        <van-datetime-picker
-                v-model="end"
-                type="date"
-                :min-date="endMinDate"
-                :max-date="endMaxDate"
-                @confirm="endConfirm"
-                @cancel="showEnd=false"
-        />
-    </van-popup>
     <div class="loading" v-if="showSpin">
         <van-loading type="spinner" color="#1989fa" :vertical="true"/>
     </div>
@@ -201,55 +170,17 @@
 new Vue({
 	el: '#app',
 	data: {
-		title: '',
-		type: '2',  // 1 为新建申请  2为申请中  3为   学生实验功能复用此页面  新建申请
-		submitBtn: '',
-		cancelBtn: '',
 		showSpin: false,
+		person: '',
 		experiment: {},
 		counts: '',
 		grade: '',
-		gradeKey: '',
-		gradeDefaultIndex: 0,
-		showClass: false,
-		gradeColumns: [],
 		startDate: '',  // 开始时间
-		endDate: '', // 结束时间
-		start: new Date(),   // 开始时间组件的  value
-		end: new Date(),  // 结束时间组件的  value
-		showStart: false,  // 显示开始时间弹框
-		showEnd: false,  // 显示结束时间弹框
-		startMinDate: new Date(2018, 0, 1), // 开始时间组件的  设置最小时间
-		startMaxDate: new Date(2050, 0, 1),  // 开始时间组件的  设置最大时间
-		endMinDate: new Date(2018, 0, 1),   // 结束时间组件的  设置最小时间
-		endMaxDate: new Date(2050, 0, 1), // 结束时间组件的  设置最大时间
-	},
-	computed: {
-		canSubmit () {
-			if (this.experiment.name && this.counts && this.grade && this.startDate && this.endDate) {
-				return false
-			} else {
-				return true
-			}
-		}
+		endDate: '' // 结束时间
 	},
 	mounted () {
-		this.gradeColumns = [{key: 1, name: '高一'}, {key: 2, name: '高二'}, {key: 3, name: '高三'}]
-		if (this.type === '1') {
-			this.title = '新建申请'
-			this.submitBtn = '提交'
-			this.cancelBtn = '取消申请'
-		} else if (this.type === '2') {
-			this.title = '申请中'
-			this.submitBtn = '提交修改'
-			this.cancelBtn = '取消'
-			this.getData()
-		} else if (this.type === '3') {   // 学生实验功能  复用此页面
-			this.title = `小凡 (加速度研究实验)`
-			this.submitBtn = '提交'
-			this.cancelBtn = '取消申请'
-          // todo  把之前操作的数据 赋值
-		}
+		this.getData()
+		this.title = `${this.person} (${this.experiment.name})`
 	},
 	methods: {
 		onClickLeft () {
@@ -259,50 +190,30 @@ new Vue({
 			this.showSpin = true
 			let res = {
 				experiment: {name: '加速度探究实验', content: '打点计时器*1、打点计时器*1、打点计时器*1、打点计时器*1', maxCount: 10},
+				person: '小凡',
 				grade: '高二',
 				gradeKey: 2,
 				counts: 8,
 				startDate: '2019-08-31',
 				endDate: '2019-09-21'
+
 			}
 			this.experiment = res.experiment
+			this.person = res.person
 			this.grade = res.grade
-			this.gradeKey = res.gradeKey
-			let idx = _.findIndex(this.gradeColumns, item => item.key === this.gradeKey)
-			this.gradeDefaultIndex = idx
 			this.counts = res.counts
 			this.startDate = res.startDate  //给cell 赋值
 			this.endDate = res.endDate  //给cell 赋值
-			this.start = new Date(res.startDate)    //给开始时间组件 赋值  时间戳
-			this.end = new Date(res.endDate)   //给结束时间组件 赋值  时间戳
-			this.startMaxDate = new Date(res.endDate)   //给开始时间组件的最大值 赋值  时间戳
-			this.endMinDate = new Date(res.startDate)   //给结束时间组件的最小值 赋值  时间戳
 			this.showSpin = false
 		},
-		startConfirm (val) {
-			this.showStart = false
-			this.endMinDate = val
-			this.startDate = moment(val).format('YYYY-MM-DD')
+		experimentDetail () {
+			console.log('器材列表页面')
 		},
-		endConfirm (val) {
-			this.showEnd = false
-			this.startMaxDate = val
-			this.endDate = moment(val).format('YYYY-MM-DD')
-		},
-		chooseExperiment () {
-			console.log('选择实验,跳转页面')
-			this.experiment = {name: '加速度探究实验', content: '打点计时器*1、打点计时器*1、打点计时器*1、打点计时器*1', maxCount: 10}
-		},
-		onConfirmGrade (val) {
-			this.showClass = false
-			this.grade = val.name
-			this.gradeKey = val.key
-		},
-		handleSubmit () {
-			console.log('提交')
+		handleReady () {
+			console.log('去准备')
 		},
 		handleCancel () {
-			console.log('取消申请')
+			console.log('返回')
 		}
 	}
 })

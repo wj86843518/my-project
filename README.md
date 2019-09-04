@@ -46,3 +46,22 @@ Using.html(使用中、使用中2)
 BadState.html(损坏情况)
 
 #common EquipmentList.html(器材列表)
+
+#学生实验
+#teacher
+Index.html(学生实验申请)
+演示实验 ==》 teacher ==》 NewApply.html(新建申请、新建申请1)(复用页面)
+演示实验 ==》 teacher ==》 SelectExperiment.html(选择实验室、搜索结果)(复用页面)
+演示实验 ==》 teacher ==》 Experiment.html(加速度探究实验室1) (复用页面)
+演示实验 ==》 teacher ==》 AddEquipment.html(搜索结果2、搜索结果3、搜索结果4) (复用页面)
+Arrangement.html(新建申请2、新建申请3、新建申请4)
+BadState.html(损坏情况)
+
+#admin(管理员)
+Index.html(管理员首页)
+WaitReceive.html(申请中)
+EquipmentList.html(器材列表)
+Arrangement1.html(实验安排、实验安排拷贝、弹框设置安排地点)
+Arrangement2.html(新建申请2拷贝3、新建申请2拷贝4)
+学生实验 ==》 teacher =》 Arrangement.html(进行中) (复用页面)
+演示实验 ==》 admin ==》 BadState.html(损坏情况)(复用页面)

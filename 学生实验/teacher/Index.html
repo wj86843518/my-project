@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>物理实验管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.1/lib/index.css">
+    <link rel="stylesheet" href="../../assets/style/common.css">
+    <link rel="stylesheet" href="../../assets/style/ui-style.css">
+
+    <!-- 引入组件 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.1/lib/vant.min.js"></script>
+    <style type="text/css">
+        .van-cell__title {
+            width: 70%;
+            flex: none;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7F7F7;
+        }
+
+        .content {
+            flex-grow: 1;
+            overflow: auto;
+            background-color: white;
+        }
+
+        .cell-title {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .title-img {
+            flex-shrink: 0;
+        }
+
+        .title-right {
+            flex-grow: 1;
+            padding-left: 10px;
+            width: 100%;
+        }
+
+        .cell-name {
+            font-size: 15px;
+            color: rgba(51, 51, 51, 1);
+            font-weight: bold;
+        }
+
+        .cell-class {
+            width: 47px;
+            height: 47px;
+            background-color: red;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+        }
+
+        .cell-class-content {
+            font-size: 14px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 1);
+            margin: auto;
+        }
+
+        .cell-time {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status1 {
+            font-weight: 500;
+            font-size: 15px;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .swipe-content {
+            height: 100%;
+            width: 100px;
+            display: flex;
+        }
+
+        .swipe-btn {
+            width: 40px;
+            height: 40px;
+            background-color: #F2645C;
+            border-radius: 100%;
+            margin: auto;
+            display: flex;
+        }
+
+        .swipe-img {
+            width: 20px;
+            margin: auto;
+        }
+
+        .color1 {
+            background-color: #FAC42D;
+        }
+
+        .color2 {
+            background-color: #FFAA60;
+        }
+
+        .color3 {
+            background-color: #FF6A5D;
+        }
+
+        .color-orange {
+            color: #FF771D;
+        }
+
+        .color-grey {
+            color: rgba(153, 153, 153, 1);
+        }
+
+        .add {
+            width: 50px;
+            height: 50px;
+            background: rgba(24, 185, 39, 1);
+            box-shadow: -3px 4px 10px 0px rgba(24, 185, 39, 0.66);
+            border-radius: 50%;
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            display: flex;
+        }
+
+        .icon-add {
+            width: 30px;
+            margin: auto;
+        }
+
+        .delete-content {
+            padding: 20px;
+            color: #999999;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <van-nav-bar
+            title="学生实验申请"
+            left-arrow
+            @click-left="onClickLeft"
+            :border="false"
+    >
+    </van-nav-bar>
+    <!--<form action="/">
+        <van-search
+                v-model="searchValue"
+                placeholder="搜索实验名称、教师姓名"
+                shape="round"
+                @search="onSearch"
+        >
+        </van-search>
+    </form>-->
+    <div class="content">
+        <van-cell class="my-cell" :center="true" @click="handleItem(item)" v-for="(item, key) in list" :key="key">
+            <div slot="title" class="cell-title">
+                <div class="cell-class"
+                     :class="{'color1': item.class === '高一', 'color2' : item.class === '高二', 'color3':  item.class==='高三'}">
+                    <p class="cell-class-content">
+                        {{item.class}}</p>
+                </div>
+                <div class="title-right">
+                    <p class="cell-name">{{item.name}}</p>
+                    <p class="cell-time">申请时间：{{item.time}}</p>
+                </div>
+            </div>
+            <div>
+                <p class="status1"
+                   :class="{'color-orange' : item.status1 === '1', 'color-grey' : item.status1 === '4'}">
+                    {{statusObj1[item.status1]}}</p>
+            </div>
+        </van-cell>
+    </div>
+    <div class="add" @click="handleAdd">
+        <img class="icon-add" src="../../assets/img/icon-add.png" alt="">
+    </div>
+    <div class="loading" v-if="showSpin">
+        <van-loading type="spinner" color="#1989fa" :vertical="true"/>
+    </div>
+</div>
+<script>
+new Vue({
+	el: '#app',
+	data: {
+		showSpin: false,
+		// searchValue: '',
+		list: [],
+		statusObj1: {
+			1: '申请中',
+			2: '安排中',
+			3: '进行中',
+			4: '已完成'
+		},
+		deleteName: ''
+	},
+	mounted () {
+		this.getData()
+	},
+	methods: {
+		onClickLeft () {
+			console.log('返回')
+		},
+		/*	onSearch (val) {
+                console.log(val)
+                this.getData(val)
+            },*/
+		getData () {
+			this.list = [
+				{name: '重力探究实验', class: '高三', time: '2019-08-21 12:33', status1: '1'},
+				{name: '重力探究实验', class: '高二', time: '2019-08-21 12:33', status1: '2'},
+				{name: '重力探究实验', class: '高一', time: '2019-08-21 12:33', status1: '3'},
+				{name: '重力探究实验', class: '高一', time: '2019-08-21 12:33', status1: '4'}
+			]
+		},
+		handleItem (item) {
+			console.log('handleItem', item)
+		},
+		handleAdd () {
+			console.log('新增，跳转页面')
+		}
+	}
+})
+var Vue = window.Vue;
+var vant = window.vant;
+</script>
+</body>
+</html>
