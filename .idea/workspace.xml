@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8ac76aae-edd8-4a73-b21d-7cadc64492bb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/演示实验/teacher/NewApply.html" beforeDir="false" afterPath="$PROJECT_DIR$/演示实验/teacher/NewApply.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/演示实验/teacher/SelectExperiment.html" beforeDir="false" afterPath="$PROJECT_DIR$/演示实验/teacher/SelectExperiment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" beforeDir="false" afterPath="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/演示实验/teacher/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/演示实验/teacher/Index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" beforeDir="false" afterPath="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,29 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
+            <state relative-caret-position="689">
               <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BadState.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/演示实验/admin/BadState.html">
+      <file leaf-file-name="Index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/演示实验/teacher/Index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="191" column="33" lean-forward="true" selection-start-line="191" selection-start-column="33" selection-end-line="191" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EquipmentList.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/学生实验/admin/EquipmentList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+            <state relative-caret-position="226">
+              <caret line="177" column="34" lean-forward="true" selection-start-line="177" selection-start-column="34" selection-end-line="177" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -49,17 +40,8 @@
       <file leaf-file-name="NewApply.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/演示实验/teacher/NewApply.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="206" column="22" lean-forward="true" selection-start-line="206" selection-start-column="22" selection-end-line="206" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WaitReceive.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/学生实验/admin/WaitReceive.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
+            <state relative-caret-position="176">
+              <caret line="189" column="38" lean-forward="true" selection-start-line="189" selection-start-column="38" selection-end-line="189" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -78,7 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>item</find>
       <find>cell</find>
       <find>count-item</find>
       <find>classNameList</find>
@@ -108,6 +89,7 @@
       <find>arrangement-status</find>
       <find>type</find>
       <find>getData</find>
+      <find>swiperB</find>
     </findStrings>
     <replaceStrings>
       <replace>dataList</replace>
@@ -125,7 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/common.js" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Index.vue" />
         <option value="$PROJECT_DIR$/search/GoodsDetail1.html" />
         <option value="$PROJECT_DIR$/search/GoodsDetail2.html" />
@@ -138,7 +119,6 @@
         <option value="$PROJECT_DIR$/演示实验/Index.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Applying.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/ReadyFinish.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Guihuan.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Using.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Readying.html" />
@@ -146,7 +126,6 @@
         <option value="$PROJECT_DIR$/search/Search.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/Experiment.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/AddEquipment.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Index.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/EquipmentList.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/Pingjia.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/Appraisal.html" />
@@ -176,6 +155,9 @@
         <option value="$PROJECT_DIR$/演示实验/teacher/SelectExperiment.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/NewApply.html" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" />
+        <option value="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" />
+        <option value="$PROJECT_DIR$/演示实验/teacher/Index.html" />
       </list>
     </option>
   </component>
@@ -186,7 +168,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-17" />
+    <option name="x" value="-18" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
   </component>
@@ -235,7 +217,7 @@
               <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-project" type="462c0819:PsiDirectoryNode" />
               <item name="演示实验" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="teacher" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -296,7 +278,8 @@
       <workItem from="1567225778420" duration="61810000" />
       <workItem from="1567428953623" duration="9246000" />
       <workItem from="1567506666156" duration="12744000" />
-      <workItem from="1567599220183" duration="10302000" />
+      <workItem from="1567599220183" duration="10395000" />
+      <workItem from="1567686531927" duration="1953000" />
     </task>
     <task id="LOCAL-00001" summary="三个功能模块页面画完">
       <created>1567431930212</created>
@@ -305,11 +288,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567431930212</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="四个功能模块页面画完">
+      <created>1567609588656</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1567609588656</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114462000" />
+    <option name="totallyTimeSpent" value="116508000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -319,7 +309,6 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32920355" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -332,6 +321,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,7 +332,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="三个功能模块页面画完" />
-    <option name="LAST_COMMIT_MESSAGE" value="三个功能模块页面画完" />
+    <MESSAGE value="四个功能模块页面画完" />
+    <option name="LAST_COMMIT_MESSAGE" value="四个功能模块页面画完" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/search/data.js" />
@@ -387,13 +378,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="419">
           <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Tuihui.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="43" column="25" lean-forward="true" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -443,13 +427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="177" column="8" selection-start-line="177" selection-start-column="8" selection-end-line="188" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/AddEquipment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="92" column="42" lean-forward="true" selection-end-line="218" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -530,13 +507,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Applying.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="248" column="10" lean-forward="true" selection-start-line="248" selection-start-column="10" selection-end-line="248" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/演示实验/admin/Readying1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -548,13 +518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="137" column="23" lean-forward="true" selection-start-line="137" selection-start-column="23" selection-end-line="137" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/teacher/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="161" column="12" lean-forward="true" selection-end-line="301" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -611,20 +574,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1900">
           <caret line="100" column="6" lean-forward="true" selection-end-line="133" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#6;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#7;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#8;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#9;n#div#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -632,22 +581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-493">
           <caret line="90" column="45" lean-forward="true" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/学生实验/admin/Arrangement1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="281" column="22" selection-start-line="281" selection-start-column="22" selection-end-line="281" selection-end-column="22" />
-          <folding>
-            <element signature="n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#van-dialog#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#10293#11408#0" />
-            <element signature="e#12249#13690#0" />
-            <element signature="e#13779#15220#0" />
-            <element signature="e#15228#16669#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -679,38 +612,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/teacher/NewApply.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="206" column="22" lean-forward="true" selection-start-line="206" selection-start-column="22" selection-end-line="206" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/学生实验/admin/WaitReceive.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
+        <state relative-caret-position="2071">
           <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/学生实验/admin/EquipmentList.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
+        <state relative-caret-position="2090">
           <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/演示实验/admin/BadState.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
+        <state relative-caret-position="3629">
           <caret line="191" column="33" lean-forward="true" selection-start-line="191" selection-start-column="33" selection-end-line="191" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/学生实验/admin/Arrangement1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="346" column="6" lean-forward="true" selection-start-line="346" selection-start-column="6" selection-end-line="346" selection-end-column="6" />
+          <folding>
+            <element signature="n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#van-dialog#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#10819#16794#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Tuihui.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="186" column="31" lean-forward="true" selection-start-line="186" selection-start-column="31" selection-end-line="186" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Applying.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="239" column="53" lean-forward="true" selection-start-line="239" selection-start-column="53" selection-end-line="239" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/AddEquipment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="84" column="24" lean-forward="true" selection-start-line="84" selection-start-column="24" selection-end-line="84" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/演示实验/teacher/NewApply.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="189" column="38" lean-forward="true" selection-start-line="189" selection-start-column="38" selection-end-line="189" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
+        <state relative-caret-position="689">
           <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/演示实验/teacher/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="177" column="34" lean-forward="true" selection-start-line="177" selection-start-column="34" selection-end-line="177" selection-end-column="34" />
         </state>
       </provider>
     </entry>

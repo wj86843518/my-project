@@ -165,6 +165,9 @@
             <van-cell class="date-class" title="结束时间"
                       :value="endDate"></van-cell>
         </van-cell-group>
+        <van-cell-group title="退回理由">
+            <van-field v-model="backReason"/>
+        </van-cell-group>
         <div class="submit">
             <van-button class="submit-btn" color="#3B93FF" :disabled="canSubmit" @click="handleSubmit">提交</van-button>
         </div>
@@ -183,7 +186,8 @@ new Vue({
 		showSpin: false,
 		startDate: '',  // 开始时间
 		endDate: '', // 结束时间
-		equipmentList: []
+		equipmentList: [],
+		backReason: ''
 	},
 	mounted () {
 		this.getData()

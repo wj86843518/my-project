@@ -180,7 +180,7 @@
         </van-search>
     </form>
     <div class="content">
-        <van-swipe-cell v-for="(item, key) in list" :key="key">
+        <van-swipe-cell v-for="(item, key) in list" :key="key" :disabled="item.status1 !== '1' && item.status1 !== '6'">
             <van-cell class="my-cell" :center="true" @click="handleItem(item)">
                 <div slot="title" class="cell-title">
                     <div class="cell-class"
