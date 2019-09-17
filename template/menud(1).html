@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>菜单</title>
+   <meta http-equiv="X-UA-Compatible" content="IE=10">
+   <meta http-equiv="pragma" content="no-cache">
+   <meta http-equiv="cache-control" content="no-cache">
+   <meta http-equiv="expires" content="0">
+   <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+   <meta http-equiv="description" content="This is my page">
+   <meta name="viewport"
+         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+   <!--mwc-->
+   <script src="lib.js"></script>
+   <script>new require({url: '', plugins: ['jquery', 'vue', 'layui']});</script>
+
+   <link rel="stylesheet" href="css/index.css">
+   <script src="webd/menu.js"></script>
+
+</head>
+<body style="overflow-y: hidden;">
+<div id="app">
+   <!-- top -->
+   <div class="top">
+      <!--<div class="logo_box"><img class="logo" src="images/logo.jpg"></div>-->
+      <span>师资发展平台</span>
+
+      <!--<button class="change_admin" onclick="logout()">退出</button>-->
+      <div class="user_box">
+         <!--<img class="user_img" src="images/user.jpg">-->
+         <span id="schoolName"></span>
+      </div>
+   </div>
+   <!-- 菜单 -->
+   <div class="left" id="left">
+      <div class="menu-title">
+         <img src="images/logo.png" class="logo">
+         鼓楼智慧教育
+      </div>
+
+      <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;" lay-shrink="all"
+          id="menuDetails">
+         <li v-for="item in menuList" class="layui-nav-item">
+            <dl :id="`menu_${item.id}`" v-if="item.children.length==0" @click="href(item,`menu_${item.id}`)">
+               <i :class="item.icon"></i>
+               {{<a href="https://urldefense.proofpoint.com/v2/url?u=http-3A__item.name&d=DwQGaQ&c=0TzQCy9lgR5hSW-bDg5HA76y7nf4lvOzvVop5GM3Y80&r=52EgojY5vYh1sqAv34xpKXq8j8uE-AnpeU_4GNLDSkM&m=_jHKQ05KdYEnB9hNVzVUf2n12RVh0Rq7Oykcg51Y13s&s=uug3UVqpmAcNxwxdwbE8wWD51J73BBuX-7kxZ1zxTrc&e=">item.name</a>}}
+            </dl>
+            <div v-else>
+               <a href="javascript:;">
+                  <i :class="item.icon"></i>
+                  {{item.name}}
+               </a>
+               <dl class="layui-nav-child">
+                  <dd :id="`menu_${item1.id}`" v-for="item1 in item.children" class=""
+                      @click="href(item1,`menu_${item1.id}`)"><a
+                          href="javascript:;">{{item1.name}}</a></dd>
+               </dl>
+            </div>
+         </li>
+      </ul>
+   </div>
+   <!--  右侧引入页 -->
+   <div class="right">
+      <iframe src="welcomed" class="href_page"></iframe>
+   </div>
+</div>
+
+</body>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        //数据
+        data: {
+            menuList: [
+                {id: 1, name: '成员管理', url: 'resultManage', icon: 'm-icon-cyda', children: []},
+                {id: 2, name: '教师业务档案', url: 'teacherbusinessFrist', icon: 'm-icon-ysywda', children: []},
+                {id: 3, name: '研判申报', url: 'judgeManaged', icon: 'm-icon-ypsb', children: []},
+                {id: 4, name: '工资名册', url: 'salaryd', icon: 'm-icon-gzmd', children: []},
+                {id: 5, name: '合同管理', url: 'contractd', icon: 'm-icon-htgl', children: []},
+                {id: 6, name: '教师流动', url: 'teacherflow', icon: 'm-icon-jsld', children: []},
+                {id: 7, name: '年度考核', url: 'assess', icon: 'm-icon-ndkh', children: []},
+                {
+                    id: 8, name: '师资发展', url: '', icon: 'm-icon-szfz', children: [
+                        // {id:9, name:'职称评审',url:'professionalTitled',icon:''},
+                        {id: 10, name: '骨干考核', url: 'diaphysisd', icon: ''},
+                        {id: 11, name: '评优评先', url: 'outstandingd', icon: ''},
+                        {id: 12, name: '工勤等级', url: 'workHardd', icon: ''},
+                        // {id:13, name:'退休名册',url:'assess',icon:''},
+                        // {id:14, name:'遗属困难名单',url:'willd',icon:''},
+                        // {id:15, name:'干部名册',url:'cadred',icon:''},
+                    ]
+                },
+            ]
+        },
+        mounted: function () {
+            layui.use('element', function () {
+                var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+                //监听导航点击
+                element.on('nav(demo)', function (elem) {
+                    //console.log(elem)
+                    //layer.msg(elem.text());
+                });
+            });
+
+            // 缓存页
+            var page = getPage('page')
+            var id = localStorage.getItem('thisId')
+            if (page != '') {
+                // 是否默认welcome
+                this.href({url:page}, id)
+            }
+
+        },
+        methods: {
+            href: function (data, id) {
+                var url = data.url
+                if (data.blank) {
+                    window.open(url);
+                } else {
+                    if (url == '') {
+                        url = '404'
+                    }
+                    $(".layui-this").removeClass("layui-this");
+                    $('#'+id).addClass("layui-this");
+
+                    var loading = layer.load(0, {shade: false});
+                    window.location.href = '#' + url;
+                    $('.href_page').attr('src', url);
+                    $('.href_page').on('load', function () {
+                        layer.close(loading);
+                    })
+                    localStorage.setItem('thisId', id)
+                }
+
+            }
+        },
+    });
+
+    function logout() {
+        window.location.href = "login";
+    }
+</script>
+<script src="js/query.js"></script>
+</html>

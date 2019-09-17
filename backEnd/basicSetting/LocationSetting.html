@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+
+        .el-input__inner {
+            text-align: center;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            /*height: 100%;*/
+            /*width: 100%;*/
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 0px 20px 20px;
+            position: relative;
+        }
+
+        .type-item {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .prefix-class {
+            background: rgba(214, 153, 48, 1);
+            width: 5px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .type-name {
+            margin-left: 10px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .type-group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-left: 20px;
+            /*align-items: center;*/
+        }
+
+        .add-type {
+            color: #2E7FF7;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            height: 32px;
+            line-height: 32px;
+            cursor: pointer;
+        }
+
+        .type-input {
+            width: 100px;
+            margin-right: 20px;
+        }
+
+        .btn-group {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .color-blue {
+            color: #2E7FF7;
+        }
+
+        .confirm-btn {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .m-t-10 {
+            margin-top: 10px;
+        }
+
+        .m-t-20 {
+            margin-top: 20px;
+        }
+
+        .w-100 {
+            width: 100px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">实验品存放地点设置</p>
+        <div class="content">
+            <div v-for="(item1, key1) in locationList" :key="key1" class="m-t-20">
+                <div class="type-item">
+                    <div class="prefix-class"></div>
+                    <el-input :readonly="actionType==='1'" size="small" class="type-input" v-model="item1.name"
+                              placeholder="教室"></el-input>
+                </div>
+                <div class="type-group">
+                    <div v-for="(item2, key) in item1.list" :key="key" class="m-t-10">
+                        <el-input :readonly="actionType==='1'" size="small" class="type-input" v-model="item2.name"
+                                  placeholder="柜名"></el-input>
+                    </div>
+                    <p v-if="actionType==='2'" class="add-type m-t-10 w-100" @click="addType2(item1.list)"><i
+                            class="el-icon-circle-plus"></i>
+                        <span>新增柜名</span>
+                    </p>
+                </div>
+            </div>
+            <div v-if="actionType==='2'">
+                <p class="add-type m-t-10 w-100" @click="addType1"><i class="el-icon-circle-plus"></i>
+                    <span>新增教室</span></p>
+            </div>
+            <div v-if="actionType === '1' && locationList.length > 0" class="confirm-btn">
+                <el-button size="small" type="primary" @click="handleConfirm">确认并生成存放地点列表</el-button>
+            </div>
+            <div class="btn-group" v-if="actionType === '2'">
+                <el-button size="small" @click="handleCancel">取消</el-button>
+                <el-button size="small" type="primary" @click="handleSave">保存</el-button>
+            </div>
+            <div class="btn-group" v-if="actionType === '1'">
+                <el-button size="small" @click="handleEdit">
+                    <i class="el-icon-edit color-blue"></i>
+                    编辑
+                </el-button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			actionType: '1',  // 1为只读  2为编辑
+			locationList: [],
+			beforeSaveList: []
+		}
+	},
+	mounted () {
+		this.getData()
+	},
+	methods: {
+		getData () {
+			this.loading = true
+			this.locationList = [
+				{
+					name: '教室1', id: 1, list: [
+						{name: '柜名'},
+						{name: '柜名'},
+						{name: '柜名'}
+					]
+				},
+				{
+					name: '教室2', id: 1, list: [
+						{name: '柜名'}
+					]
+				}
+			]
+			this.loading = false
+		},
+		addType1 () {
+			let length = this.locationList.length
+			if (length > 0) {
+				let flag = false  // 判断前面的教室名是否有空
+				this.locationList.some(item => {
+					if (!item.name) {
+						this.$message({
+							message: '教室名不能为空！',
+							type: 'warning'
+						})
+						flag = true
+						return true
+					}
+				})
+				if (flag) {
+					return null
+				} else {
+					this.locationList.push({name: '', list: [{name: ''}]})
+				}
+			} else {
+				this.locationList.push({name: '', list: [{name: ''}]})
+			}
+		},
+		addType2 (list) {
+			let length = list.length
+			if (length > 0) {
+				let flag = false   // 判断前面的柜名是否为空
+				list.some(item => {
+					if (!item.name) {
+						this.$message({
+							message: '柜名不能为空！',
+							type: 'warning'
+						})
+						flag = true
+						return true
+					}
+				})
+				if (flag) {
+					return null
+				} else {
+					list.push({name: ''})
+				}
+			} else {
+				list.push({name: ''})
+			}
+		},
+		handleEdit () {
+			this.actionType = '2'
+			// 保留原来的数据
+			this.beforeSaveList = _.cloneDeep(this.locationList)
+		},
+		handleCancel () {
+			this.actionType = '1'
+			// 恢复原来的数据
+			this.locationList = _.cloneDeep(this.beforeSaveList)
+		},
+		handleSave () {
+			if (this.locationList.length === 0) {
+				this.$message({
+					message: '请把信息填写完整！',
+					type: 'warning'
+				})
+				return null
+			}
+			let flag = false  // 判断是否有空值
+			this.locationList.forEach(item1 => {
+				if (!item1.name) {
+					flag = true
+				}
+				item1.list.forEach(item2 => {
+					if (!item2.name) {
+						flag = true
+					}
+				})
+			})
+			if (flag) {
+				this.$message({
+					message: '请把信息填写完整！',
+					type: 'warning'
+				})
+				return null
+			}
+			this.actionType = '1'
+		},
+		// 生成器材列表
+		handleConfirm () {
+			console.log('生成存放地点列表')
+		}
+	}
+})
+</script>
+</html>

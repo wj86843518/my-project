@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+        .my-input .el-input__inner {
+            border-left: 0px;
+            border-right: 0px;
+            border-top: 0px;
+            border-radius: 0px;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 0px 20px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .table {
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            text-align: right;
+        }
+
+        .dialog .el-dialog {
+            width: 600px;
+        }
+
+        .w-250 {
+            width: 250px;
+        }
+
+        .m-l-20 {
+            margin-left: 20px;
+        }
+        .m-l-10 {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">物品查询</p>
+        <div class="content">
+            <div class="header">
+                <div class="header-left">
+                    <el-select v-model="type1" placeholder="一级类" size="small" class="w-250" @change="type1Change">
+                        <el-option
+                                v-for="(item,key) in type1List"
+                                :key="key"
+                                :label="item.name"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                    <el-select v-model="type2" placeholder="二级类" size="small" class="w-250 m-l-20" @change="type2Change">
+                        <el-option
+                                v-for="(item,key) in type2List"
+                                :key="key"
+                                :label="item.name"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="header-right">
+                    <el-input v-model="searchValue" placeholder="物品名称、编号" size="small" class="w-250"
+                              @keyup.enter.native="handleSearch"></el-input>
+                    <el-button size="small"  class="m-l-10" type="primary" @click="handleSearch">搜索</el-button>
+                </div>
+            </div>
+            <div class="table">
+                <el-table :data="tableData" style="width: 100%" border stripe>
+                    <el-table-column prop="type1" label="一级类" align="center">
+                    </el-table-column>
+                    <el-table-column prop="type2" label="二级类" align="center">
+                    </el-table-column>
+                    <el-table-column prop="code" label="编号" align="center">
+                    </el-table-column>
+                    <el-table-column prop="name" label="名称" align="center">
+                    </el-table-column>
+                    <el-table-column prop="unit" label="规格" align="center">
+                    </el-table-column>
+                    <el-table-column prop="counts" label="数量" align="center">
+                    </el-table-column>
+                    <el-table-column prop="class" label="教室" align="center">
+                    </el-table-column>
+                    <el-table-column prop="cabinet" label="柜号" align="center">
+                    </el-table-column>
+                    <el-table-column prop="status" label="状态" align="center">
+                    </el-table-column>
+                    <el-table-column prop="action" label="操作" align="center" fixed="right" width="150">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.row)">编辑
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.row)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="pagination"
+                               @size-change="handleSizeChange"
+                               @current-change="handleCurrentChange"
+                               :current-page="page.currentPage"
+                               :page-sizes="[10, 20, 30, 40]"
+                               :page-size="page.pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="total">
+                </el-pagination>
+            </div>
+        </div>
+        <el-dialog
+                title="编辑"
+                class="dialog"
+                :close-on-click-modal="false"
+                :visible.sync="dialogVisible">
+            <div>
+                <el-form label-position="left" label-width="80px" :model="myForm">
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="名称">
+                                <el-input class="my-input" v-model="myForm.name" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="编号">
+                                <el-input class="my-input" v-model="myForm.code" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-form-item label="物品类别">
+                                <el-select size="small" v-model="myForm.key1" placeholder="一级类"
+                                           @change="dialogType1Change">
+                                    <el-option
+                                            v-for="(item, key) in dialogType1List"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.key">
+                                    </el-option>
+                                </el-select>
+                                <el-select size="small" class="m-l-20" v-model="myForm.key2" placeholder="二级类">
+                                    <el-option
+                                            v-for="(item, key) in dialogType2List"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="数量">
+                                <el-input class="my-input" v-model="myForm.counts" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="规格">
+                                <el-input class="my-input" v-model="myForm.unit" size="small"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-form-item label="存放地点">
+                                <el-select size="small" v-model="myForm.classKey" placeholder="教室"
+                                           @change="dialogClassroomChange">
+                                    <el-option
+                                            v-for="(item, key) in dialogClassroomList"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.key">
+                                    </el-option>
+                                </el-select>
+                                <el-select size="small" class="m-l-20" v-model="myForm.cabinetKey" placeholder="柜号">
+                                    <el-option
+                                            v-for="(item, key) in dialogCabinetList"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.key">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <el-form-item label="当前状态">
+                                <el-select size="small" v-model="myForm.statusKey" placeholder="状态">
+                                    <el-option
+                                            v-for="(item, key) in statusList"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.key">
+                                    </el-option>
+                                </el-select>
+                                <el-select size="small" class="m-l-20" v-model="myForm.borrowMan" placeholder="出借人">
+                                    <el-option
+                                            v-for="(item, key) in borrowManList"
+                                            :key="key"
+                                            :label="item.name"
+                                            :value="item.name">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false" size="small">取 消</el-button>
+             <el-button type="primary" @click="handleDialogConfirm" size="small">确 定</el-button>
+  </span>
+        </el-dialog>
+    </div>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			type1: '',  // 搜索条件  一级类  key
+			type1List: [],
+			type2: '',  // 搜索条件  二级类  key
+			type2List: [],
+			searchValue: '',   // 搜索条件  搜索框
+			tableData: [],
+			page: {
+				currentPage: 1,
+				pageSize: 10
+			},
+			total: 0,
+			dialogVisible: false,
+			myForm: {},
+			dialogType1List: [],  	// 一级类 下拉框
+			dialogType2List: [],    // 二级类 下拉框
+			dialogClassroomList: [],	// 教室 下拉框
+			dialogCabinetList: [], // 柜号 下拉框
+			statusList: [],   // 状态 下拉框
+			borrowManList: []  // 出借人 下拉框
+		}
+	},
+	mounted () {
+		this.getSearchData()
+		this.getData()
+	},
+	methods: {
+		getSearchData () {
+			this.loading = true
+			// 一级类 下拉框
+			this.type1List = [
+				{name: '一级类1', id: 1, key: '1'},
+				{name: '一级类2', id: 2, key: '2'},
+				{name: '一级类3', id: 3, key: '3'},
+				{name: '一级类4', id: 4, key: '4'}
+			]
+			this.dialogType1List = this.type1List
+			// 教室 下拉框
+			this.dialogClassroomList = [
+				{name: '科学室1', id: 1, key: '1'},
+				{name: '科学室2', id: 2, key: '2'},
+				{name: '科学室3', id: 3, key: '3'},
+				{name: '科学室4', id: 4, key: '4'}
+			]
+			// 状态 下拉框
+			this.statusList = [
+				{name: '出借', key: '1'},
+				{name: '空闲', key: '2'}
+			]
+			// 出借人 下拉框
+			this.borrowManList = [
+				{name: '小红'},
+				{name: '小明'},
+				{name: '小白'}
+			]
+			this.loading = false
+		},
+		getData () {
+			console.log(this.type1)
+			console.log(this.type2)
+			console.log(this.searchValue)
+			console.log(this.page.currentPage)
+			console.log(this.page.pageSize)
+			// call api
+			this.loading = true
+			this.tableData = [
+				{
+					id: 1,
+					type1: '二级类1',
+					key1: '1',
+					type2: '二级类2',
+					key2: '2',
+					code: '234324',
+					name: '小车',
+					unit: '辆',
+					counts: 10,
+					class: '科学室1',
+					classKey: '1',
+					cabinet: '柜号1',
+					cabinetKey: '1',
+					status: '空闲',
+					statusKey: '2',
+					borrowMan: '小红'
+				},
+				{
+					id: 2,
+					type1: '二级类2',
+					key1: '2',
+					type2: '二级类3',
+					key2: '3',
+					code: '234324',
+					name: '小车',
+					unit: '辆',
+					counts: 10,
+					class: '科学室2',
+					classKey: '2',
+					cabinet: '柜号2',
+					cabinetKey: '2',
+					status: '出借',
+					statusKey: '1',
+					borrowMan: '小白'
+				}
+			]
+			this.total = 50
+			this.loading = false
+		},
+		type1Change (val) {
+			this.type1 = val
+			this.type2 = ''
+			this.type2List = [
+				{name: '二级类1', id: 1, key: '1'},
+				{name: '二级类2', id: 2, key: '2'},
+				{name: '二级类3', id: 3, key: '3'},
+				{name: '二级类4', id: 4, key: '4'}
+			]
+			this.page.currentPage = 1
+			this.getData()
+		},
+		type2Change (val) {
+			this.type2 = val
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleSearch () {
+			console.log('search')
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleSizeChange (val) {
+			this.page.pageSize = val
+			this.getData()
+		},
+		handleCurrentChange (val) {
+			this.page.currentPage = val
+			this.getData()
+		},
+		handleEdit (row) {
+			console.log(row)
+			this.myForm = _.cloneDeep(row)
+			// 二级类 list
+			this.dialogType2List = [
+				{name: '二级类1', id: 1, key: '1'},
+				{name: '二级类2', id: 2, key: '2'},
+				{name: '二级类3', id: 3, key: '3'},
+				{name: '二级类4', id: 4, key: '4'}
+			]
+			// 柜号list
+			this.dialogCabinetList = [
+				{name: '柜号1', id: 1, key: '1'},
+				{name: '柜号2', id: 1, key: '2'},
+				{name: '柜号3', id: 1, key: '3'},
+				{name: '柜号4', id: 1, key: '4'}
+			]
+			this.dialogVisible = true
+		},
+		handleDelete (row) {
+			console.log(row)
+			// call api
+			this.$message({
+				message: '删除成功！',
+				type: 'success'
+			})
+			this.page.currentPage = 1
+			this.getData()
+		},
+		dialogType1Change (val) {
+			console.log(val)
+			this.dialogType2List = [
+				{name: '二级类1', id: 1, key: '1'},
+				{name: '二级类2', id: 2, key: '2'},
+				{name: '二级类3', id: 3, key: '3'},
+				{name: '二级类4', id: 4, key: '4'}
+			]
+			this.myForm.key2 = ''
+		},
+		dialogClassroomChange (val) {
+			console.log(val)
+			this.dialogCabinetList = [
+				{name: '柜号1', id: 1, key: '1'},
+				{name: '柜号2', id: 1, key: '2'},
+				{name: '柜号3', id: 1, key: '3'},
+				{name: '柜号4', id: 1, key: '4'}
+			]
+			this.myForm.cabinetKey = ''
+		},
+		handleDialogConfirm () {
+			if (this.myForm.name && this.myForm.code && this.myForm.key1 && this.myForm.key2
+				&& this.myForm.counts && this.myForm.unit && this.myForm.classKey && this.myForm.cabinetKey
+				&& this.myForm.statusKey && this.myForm.borrowMan) {
+				// call api
+				this.$message({
+					message: '编辑成功！',
+					type: 'success'
+				})
+				this.dialogVisible = false
+			} else {
+				this.$message({
+					message: '请把信息填写完整！',
+					type: 'success'
+				})
+			}
+		}
+	}
+})
+</script>
+</html>

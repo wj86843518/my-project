@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="pc/css/element.css">
+    <link rel="stylesheet" href="pc/css/base.css">
+    <script src="pc/js/vue.js"></script>
+    <script src="pc/js/element.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        #app {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .el-container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .el-aside {
+            text-align: start;
+            height: 100%;
+            background-color: #304156;
+        }
+
+        #logo {
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            background-color: #263445;
+        }
+
+        .el-menu {
+            border: none;
+        }
+
+        .el-menu:not(.el-menu--collapse) {
+            width: 200px;
+        }
+
+        .el-menu .is-active {
+            background-color: #3c8aff !important;
+        }
+
+        .el-menu .el-menu-item:hover {
+            background-color: #3c8aff !important;
+        }
+
+        .el-menu .el-submenu__title:hover {
+            background-color: #304156 !important;
+        }
+
+        .el-header {
+            color: #333;
+            text-align: center;
+            line-height: 60px;
+            position: relative;
+        }
+
+        .el-header [class^=el-icon-] {
+            width: 24px;
+            text-align: center;
+            font-size: 24px;
+            vertical-align: middle;
+        }
+
+        #asideFold {
+            position: relative;
+            float: left;
+            top: 18px;
+            cursor: pointer;
+        }
+
+        .el-avatar {
+            top: 10px;
+        }
+
+        .el-header span {
+            position: relative;
+            float: right;
+            margin: 0 10px;
+        }
+
+        .el-main {
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: center;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-aside width="auto">
+                <div id="logo">
+                    <span v-show="!asideFold">公文流转</span>
+                </div>
+                <el-menu :default-active="menuSelectIndex" @select='menuSelect' background-color="#304156"
+                    text-color="#fff" active-text-color="#fff" :collapse="asideFold">
+                    <el-menu-item index="1">
+                        <i class="el-icon-s-home"></i>
+                        <span slot="title">首页</span>
+                    </el-menu-item>
+                    <el-menu-item index="2">
+                        <i class="el-icon-document-add"></i>
+                        <span slot="title">新建公文</span>
+                    </el-menu-item>
+                    <el-menu-item index="3">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">公文列表</span>
+                    </el-menu-item>
+                    <el-submenu index="4">
+                        <template slot="title">
+                            <i class="el-icon-setting"></i>
+                            <span>系统配置</span>
+                        </template>
+                        <el-menu-item index="4-1">人员配置</el-menu-item>
+                        <el-menu-item index="4-2">公文配置</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-container>
+                <el-header>
+                    <i id="asideFold" @click="asideFold = !asideFold"
+                        :class="[asideFold ? 'el-icon-s-unfold' : 'el-icon-s-fold']"></i>
+                    <!-- 头像放到src里，会直接覆盖默认头像-->
+                    <span>{{userInfo.duty}}</span>
+                    <el-avatar icon="el-icon-user-solid" :src="userInfo.headUrl"></el-avatar>
+                </el-header>
+                <el-main>
+                    <iframe :src="menuUrl[menuSelectIndex]" frameborder="0"></iframe>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<script>
+
+    let app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                userInfo: {
+                    duty: '管理员',
+                    headUrl: ''
+                },
+                asideFold: false,// 菜单栏收起状态
+                menuSelectIndex: '1',
+                menuUrl: {
+                    '1': 'home',
+                    '2': 'edit',
+                    '3': 'list',
+                    '4-1': 'userConfig',
+                    '4-2': 'docConf'
+                }
+            }
+        },
+        methods: {
+            menuSelect(index, path) {
+                if (this.menuSelectIndex == index) return false;
+                this.menuSelectIndex = index;
+                // do something else
+            }
+        }
+    });
+
+</script>
+
+</html>

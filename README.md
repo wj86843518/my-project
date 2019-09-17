@@ -65,3 +65,24 @@ Arrangement1.html(实验安排、实验安排拷贝、弹框设置安排地点)
 Arrangement2.html(新建申请2拷贝3、新建申请2拷贝4)
 学生实验 ==》 teacher =》 Arrangement.html(进行中) (复用页面)
 演示实验 ==》 admin ==》 BadState.html(损坏情况)(复用页面)
+
+
+移动端修改：
+在assets ==》 style ==》 ui-style.css 替换原来的文件
+在search ==》 Index.html ==》 把样式表替换原来的样式
+
+
+后端工程 ：backEnd
+入口：Index.html
+
+实验设置：basicSetting ==》LaboratorySetting.html
+实验器材大类设置：basicSetting ==》TypeSetting.html
+实验品存放地点设置：basicSetting ==》LocationSetting.html
+导入实验室器材数据：basicSetting ==》ImportData.html
+
+物品查询：messageSearch ==> GoodsSearch.html
+使用日志：messageSearch ==> UseLog.html
+评价：messageSearch ==> Appraise.html
+实验日志：messageSearch ==> ExperimentLog.html
+
+实验室管理：experimentalManagement ==》 ExperimentalManagement.html

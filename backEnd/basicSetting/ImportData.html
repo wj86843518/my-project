@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            flex-flow: row wrap;
+            flex-grow: 1;
+        }
+
+        .header-right {
+            width: 190px;
+            flex-shrink: 0;
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .type1-item {
+            border: 1px solid #DCDFE6;
+            margin-right: 10px;
+            padding: 5px 20px;
+            color: #000000;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .active-type1 {
+            background-color: #409EFF;
+            color: white;
+            border: 1px solid #409EFF;
+        }
+
+        .upload-item {
+            margin-left: 10px;
+        }
+
+        .import-btn {
+            background-color: #F8924F;
+            border: 1px solid #F8924F;
+            width: 80px;
+        }
+
+        .import-btn.el-button--primary:focus, .import-btn.el-button--primary:hover {
+            background-color: #F8924F !important;
+            border: 1px solid #F8924F;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .table-header {
+            display: flex;
+            flex-flow: row wrap;
+            background-color: #F1F6FC;
+        }
+
+        .type2-item {
+            padding: 5px 20px;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        .active-type2 {
+            color: #409EFF;
+            position: relative;
+        }
+
+        .active-type2:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #409EFF;
+            left: 0px;
+        }
+
+        .pagination {
+            text-align: right;
+        }
+
+        .bottom-btn {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">导入实验器材数据</p>
+        <div class="content">
+            <div class="header">
+                <div class="header-left">
+                    <div v-for="(item, key) in typeList1" class="type1-item" @click="handleType1Item(item)"
+                         :class="{'active-type1' : item.id === activeType1}">
+                        {{item.name}}
+                    </div>
+                </div>
+                <div class="header-right">
+                    <el-button size="small" @click="handleDownload">
+                        <i class="el-icon-download"></i>下载模板
+                    </el-button>
+                    <!--<el-button size="small" class="import-btn" type="primary" @click="handleImport">导入</el-button>-->
+                    <el-upload
+                            class="upload-item"
+                            :show-file-list="false"
+                            :action="actionPath"
+                            :before-upload="beforeUoload"
+                            :on-success="uploadSuccess"
+                            accept=".xlsx">
+                        <el-button size="small" type="primary" class="import-btn">导入</el-button>
+                    </el-upload>
+
+
+                </div>
+            </div>
+            <div class="table">
+                <div class="table-header">
+                    <div v-for="(item, key) in typeList2" :key="key" class="type2-item"
+                         :class="{'active-type2':item.id ===activeType2}" @click="handleType2Item(item)">
+                        {{item.name}}
+                    </div>
+                </div>
+                <el-table :data="tableData" style="width: 100%" border stripe>
+                    <el-table-column prop="code" label="物品编号" align="center">
+                    </el-table-column>
+                    <el-table-column prop="name" label="名称" align="center">
+                    </el-table-column>
+                    <el-table-column prop="counts" label="数量" align="center">
+                    </el-table-column>
+                    <el-table-column prop="unit" label="规格" align="center">
+                    </el-table-column>
+                    <el-table-column prop="location" label="存放处" align="center">
+                    </el-table-column>
+                    <el-table-column prop="cabinet" label="柜" align="center">
+                    </el-table-column>
+                    <el-table-column prop="type" label="类别" align="center">
+                    </el-table-column>
+                    <el-table-column prop="everyCounts" label="每组件数" align="center">
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="pagination"
+                               @size-change="handleSizeChange"
+                               @current-change="handleCurrentChange"
+                               :current-page="page.currentPage"
+                               :page-sizes="[10, 20, 30, 40]"
+                               :page-size="page.pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="total">
+                </el-pagination>
+            </div>
+            <div class="bottom-btn">
+                <el-button size="small" @click="downloadCode">
+                    生成条码并下载
+                </el-button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			typeList1: [],
+			activeType1: '',
+			typeList2: [],
+			activeType2: '',
+			tableData: [],
+			actionPath: 'https://jsonplaceholder.typicode.com/posts/',    //上传的url
+			page: {
+				currentPage: 1,
+				pageSize: 10
+			},
+			total: 0
+		}
+	},
+	mounted () {
+		this.getSearchData()
+		this.getTableData()
+	},
+	methods: {
+		getSearchData () {
+			this.typeList1 = [
+				{
+					name: '大一类', id: 1, list: [
+						{name: '二级类1', id: 1},
+						{name: '二级类2', id: 2},
+						{name: '二级类3', id: 3},
+						{name: '二级类4', id: 4},
+						{name: '二级类1', id: 5},
+						{name: '二级类2', id: 6},
+						{name: '二级类3', id: 7},
+						{name: '二级类4', id: 8},
+						{name: '二级类1', id: 9},
+						{name: '二级类2', id: 10},
+						{name: '二级类3', id: 11},
+						{name: '二级类4', id: 12},
+						{name: '二级类1', id: 13},
+						{name: '二级类2', id: 14},
+						{name: '二级类3', id: 15},
+						{name: '二级类4', id: 16}
+					]
+				},
+				{name: '大二类', id: 2, list: []},
+				{name: '大三类', id: 3, list: []}
+			]
+			if (this.typeList1.length > 0) {
+				this.activeType1 = this.typeList1[0].id
+				this.typeList2 = this.typeList1[0].list
+				/*if (this.typeList2.length > 0) {
+					this.activeType2 = this.typeList2[0].id
+				}*/
+			}
+		},
+		getTableData () {
+			console.log(this.activeType1)
+			console.log(this.activeType2)
+			console.log(this.page.pageSize)
+			console.log(this.page.currentPage)
+			this.loading = true
+			this.tableData = [
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+				{
+					id: 1,
+					code: '345613568',
+					name: '棉线',
+					counts: 1,
+					unit: '箱',
+					location: '准备室1',
+					cabinet: 'F柜',
+					type: '组件',
+					everyCounts: 100
+				},
+			]
+			this.total = 50
+			this.loading = false
+		},
+		handleType1Item (item) {
+			if (this.activeType1 !== item.id) {
+				this.activeType1 = item.id
+				this.activeType2 = ''
+				this.page.currentPage = 1
+				this.getTableData()
+			}
+		},
+		handleType2Item (item) {
+			if (this.activeType2 !== item.id) {
+				this.activeType2 = item.id
+				this.page.currentPage = 1
+				this.getTableData()
+			}
+		},
+		handleDownload () {
+			console.log('下载模板')
+			// call api
+			// 		https://www.cnblogs.com/yulj/p/8494465.html  文件下载demo
+		},
+		handleImport () {
+			console.log('导入')
+		},
+		beforeUoload () {
+			this.loading = true
+		},
+		uploadSuccess (res) {
+			this.loading = false
+		},
+		downloadCode () {
+			console.log('生成条码并下载')
+		},
+		handleSizeChange (val) {
+			this.page.pageSize = val
+			this.getTableData()
+		},
+		handleCurrentChange (val) {
+			this.page.currentPage = val
+			this.getTableData()
+		}
+	}
+})
+</script>
+</html>

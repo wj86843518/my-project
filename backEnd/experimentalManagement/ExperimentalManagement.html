@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+        .my-input .el-input__inner {
+            border-left: 0px;
+            border-right: 0px;
+            border-top: 0px;
+            border-radius: 0px;
+        }
+
+        .el-dialog__body {
+            padding: 10px 20px;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 0px 20px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .table {
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            text-align: right;
+        }
+
+        .dialog .el-dialog {
+            width: 1000px;
+        }
+
+        .dialog-subtitle {
+            height: 30px;
+            line-height: 30px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .my-input {
+            width: 200px;
+        }
+
+        .search-input {
+            width: 300px;
+            margin-top: 10px;
+        }
+
+        .box-content {
+            margin-top: 20px;
+            width: 100%;
+            height: 250px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .box-left {
+            width: 300px;
+            border: 1px solid #BEBEBE;
+            padding: 10px;
+            flex-shrink: 0;
+            overflow: auto;
+        }
+
+        .box-right {
+            margin-left: 20px;
+            flex-grow: 1;
+            border: 1px solid #BEBEBE;
+            padding: 10px;
+            overflow: auto;
+        }
+
+        .w-250 {
+            width: 250px !important;
+        }
+
+        .m-l-20 {
+            margin-left: 20px;
+        }
+
+        .m-l-10 {
+            margin-left: 10px;
+        }
+
+        .txt-left {
+            text-align: left;
+        }
+
+        .txt-center {
+            text-align: center;
+        }
+
+        .txt-right {
+            text-align: right;
+        }
+
+        .text-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .color-black {
+            color: #000000;
+        }
+
+        .color-blue {
+            color: #4588E2;
+        }
+
+        .color-red {
+            color: red;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .left-item {
+            padding: 5px 0px;
+        }
+
+        .right-item {
+            display: flex;
+            align-items: center;
+            padding: 5px 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">实验管理</p>
+        <div class="content">
+            <div class="header">
+                <div class="header-left">
+                    <el-input v-model="searchValue" placeholder="物品名称、编号" size="small" class="w-250"
+                              @keyup.enter.native="handleSearch"></el-input>
+                    <el-button size="small" type="primary" class="m-l-10" @click="handleSearch">搜索</el-button>
+                </div>
+                <div class="header-right">
+                    <el-button size="small" type="primary" class="m-l-10" @click="handleNew">新建</el-button>
+                </div>
+            </div>
+            <div class="table">
+                <el-table :data="tableData" style="width: 100%" border stripe>
+                    <el-table-column prop="name" label="实验名称" align="center">
+                    </el-table-column>
+                    <el-table-column prop="person" label="创建人" align="center">
+                    </el-table-column>
+                    <el-table-column prop="date" label="创建日期" align="center">
+                    </el-table-column>
+                    <el-table-column prop="equipment" label="所含器材" align="center" :show-overflow-tooltip="true">
+                    </el-table-column>
+                    <el-table-column prop="action" label="操作" align="center" width="300">
+                        <template slot-scope="scope">
+                            <el-button
+                                    :disabled="scope.row.type === '1'"
+                                    size="mini"
+                                    @click="handleUp(scope.row)">上架
+                            </el-button>
+                            <el-button
+                                    :disabled="scope.row.type === '2'"
+                                    size="mini"
+                                    @click="handleDown(scope.row)">下架
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.row)">编辑
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.row)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="pagination"
+                               @size-change="handleSizeChange"
+                               @current-change="handleCurrentChange"
+                               :current-page="page.currentPage"
+                               :page-sizes="[10, 20, 30, 40]"
+                               :page-size="page.pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="total">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+    <el-dialog
+            title="实验管理"
+            class="dialog"
+            v-loading="dialogLoading"
+            :close-on-click-modal="false"
+            :visible.sync="dialogVisible">
+        <div>
+            <span>实验名称</span>
+            <el-input class="my-input" size="small" v-model="experimentalName" placeholder="实验名称"></el-input>
+            <p class="dialog-subtitle"> 添加实验器材</p>
+            <el-input class="search-input" size="small" placeholder="搜索物品名称、编号" v-model="experimentalSearch"
+                      class="input-with-select" @keyup.enter.native="handleDialogSearch">
+                <el-button slot="append" icon="el-icon-search" @click="handleDialogSearch"></el-button>
+            </el-input>
+            <div class="box-content">
+                <div class="box-left" v-loading="leftLoading">
+                    <el-row :gutter="10" v-for="(item, key) in leftList" :key="key" class="left-item">
+                        <el-col :span="9">
+                            <div class="txt-left text-ellipsis color-black">{{item.code}}</div>
+                        </el-col>
+                        <el-col :span="10">
+                            <div class="txt-center text-ellipsis color-black">{{item.unit}} {{item.name}}</div>
+                        </el-col>
+                        <el-col :span="5">
+                            <div class="txt-right text-ellipsis color-blue"
+                                 :class="{'cursor-pointer' : item.type === '添加'}" @click="handleDialogAdd(item)">
+                                {{item.type}}
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="box-right">
+                    <el-row :gutter="10" v-for="(item, key) in rightList" :key="key" class="right-item">
+                        <el-col :span="6">
+                            <div class="txt-left text-ellipsis color-black">{{item.code}}</div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="txt-center text-ellipsis color-black">{{item.unit}} {{item.name}}</div>
+                        </el-col>
+                        <el-col :span="9">
+                            <div class="txt-center text-ellipsis color-black">
+                                <el-input-number size="mini" v-model="item.number" :min="1"></el-input-number>
+                            </div>
+                        </el-col>
+                        <el-col :span="3">
+                            <div class="txt-right color-red cursor-pointer" @click="handleDialogDelete(key)">删除</div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+         <el-button type="primary" @click="handleDialogConfirm" size="small">保存</el-button>
+         <el-button type="primary" @click="handleDialogConfirmAndUp" size="small">保存并上架</el-button>
+  </span>
+    </el-dialog>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			date: '',
+			person: '',
+			searchValue: '',   // 搜索条件  搜索框
+			tableData: [],
+			page: {
+				currentPage: 1,
+				pageSize: 10
+			},
+			total: 0,
+			// 弹出框
+			dialogVisible: false,
+			dialogLoading: false,
+			experimentalName: '',
+			experimentalSearch: '',
+			leftList: [],
+			rightList: [],
+			leftLoading: false
+		}
+	},
+	mounted () {
+		this.getData()
+	},
+	methods: {
+		getData () {
+			console.log(this.date)
+			console.log(this.person)
+			console.log(this.searchValue)
+			console.log(this.page.currentPage)
+			console.log(this.page.pageSize)
+			// call api
+			this.loading = true
+			this.tableData = [
+				{
+					id: 1,
+					name: '加速度研究实验',
+					person: '小红',
+					date: '2019-09-10',
+					equipment: '小车，砝码,小车，砝码,小车，砝码,小车，砝码,小车，砝码',
+					type: '1'    //1 为上架  2为下架
+				}
+			]
+			this.total = 50
+			this.loading = false
+		},
+		handleSearch () {
+			this.page.currentPage = 1
+			console.log(this.searchValue)
+			this.getData()
+		},
+		handleNew () {
+			// 清空上次的数据
+			this.experimentalName = ''
+			this.experimentalSearch = ''
+			this.leftList = []
+			this.rightList = []
+			this.dialogVisible = true
+		},
+		handleSizeChange (val) {
+			this.page.pageSize = val
+			this.getData()
+		},
+		handleCurrentChange (val) {
+			this.page.currentPage = val
+			this.getData()
+		},
+		handleUp (row) {
+			console.log(row)
+			this.loading = true
+			this.$message({
+				message: '上架成功！',
+				type: 'success'
+			})
+			this.loading = false
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleDown (row) {
+			console.log(row)
+			this.loading = true
+			this.$message({
+				message: '下架成功！',
+				type: 'success'
+			})
+			this.loading = false
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleEdit (row) {
+			console.log(row)
+			// 清空上次的数据
+			this.experimentalName = ''
+			this.experimentalSearch = ''
+			this.leftList = []
+			this.rightList = []
+			this.dialogVisible = true
+			this.experimentalName = row.name
+			this.dialogLoading = true
+			// 获取右边的数据
+			this.rightList = [
+				{id: 1, code: '938321232132132112321312341', name: '砝码', unit: '10g', number: 100},
+				{id: 1, code: '938321232132132112321312343', name: '滑轮', unit: '个', number: 20}
+			]
+			this.dialogLoading = false
+		},
+		handleDelete (row) {
+			this.loading = true
+			this.$message({
+				message: '删除成功！',
+				type: 'success'
+			})
+			this.loading = false
+			this.getData()
+		},
+		// 保存
+		handleDialogConfirm () {
+			if (this.experimentalName.trim()) {
+				this.dialogLoading = true
+				console.log(this.rightList)
+				this.dialogLoading = false
+				this.dialogVisible = false
+				this.$message({
+					message: '保存成功！',
+					type: 'success'
+				})
+			} else {
+				this.$message({
+					message: '请把信息填写完整！',
+					type: 'warning'
+				})
+			}
+		},
+		// 保存并上架
+		handleDialogConfirmAndUp () {
+			if (this.experimentalName.trim()) {
+				this.dialogLoading = true
+				console.log(this.rightList)
+				this.dialogLoading = false
+				this.dialogVisible = false
+				this.$message({
+					message: '保存并上架成功！',
+					type: 'success'
+				})
+			} else {
+				this.$message({
+					message: '请把信息填写完整！',
+					type: 'warning'
+				})
+			}
+		},
+		// 搜索关键字
+		handleDialogSearch () {
+			this.leftLoading = true
+			this.leftList = [
+				{id: 1, code: '938321232132132112321312341', name: '砝码', unit: '10g'},
+				{id: 1, code: '938321232132132112321312342', name: '小车', unit: '个'},
+				{id: 1, code: '938321232132132112321312343', name: '滑轮', unit: '个'},
+				{id: 1, code: '938321232132132112321312344', name: '计时器1', unit: '个'},
+				{id: 1, code: '938321232132132112321312345', name: '计时器2', unit: '个'},
+				{id: 1, code: '938321232132132112321312346', name: '计时器3', unit: '个'},
+				{id: 1, code: '938321232132132112321312347', name: '计时器4', unit: '个'},
+				{id: 1, code: '938321232132132112321312348', name: '计时器5', unit: '个'},
+				{id: 1, code: '938321232132132112321312349', name: '计时器6', unit: '个'},
+				{id: 1, code: '938321232132132112321312314', name: '计时器7', unit: '个'},
+				{id: 1, code: '938321232132132112321312324', name: '计时器8', unit: '个'}
+			]
+			this.getStatus()
+			this.leftLoading = false
+		},
+		// 获取状态
+		getStatus () {
+			this.leftList.forEach(item1 => {
+				item1.type = '添加'
+				this.rightList.forEach(item2 => {
+					if (item1.code === item2.code) {
+						item1.type = '已添加'
+					}
+				})
+			})
+		},
+		handleDialogAdd (item) {
+			if (item.type === '已添加') return null
+			this.rightList.push({
+				id: item.id,
+				code: item.code,
+				name: item.name,
+				unit: item.unit,
+				number: 1
+			})
+			this.getStatus()
+			this.$forceUpdate()
+		},
+		handleDialogDelete (idx) {
+			this.rightList.splice(idx, 1)
+			this.getStatus()
+			this.$forceUpdate()
+		}
+	}
+})
+</script>
+</html>

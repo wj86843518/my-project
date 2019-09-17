@@ -11,7 +11,6 @@
     color: #333333;
 }
 
-
 /*// loading*/
 .loading {
     position: fixed;
@@ -35,7 +34,13 @@
 }
 
 /*btn*/
-.van-button{
+.van-button {
     height: 40px;
     line-height: 38px;
+}
+
+/*  todo  修改下边框*/
+.van-cell:not(:last-child)::after {
+    border-bottom: 1px solid #CDCDCD !important;
+    right: 16px !important;
 }

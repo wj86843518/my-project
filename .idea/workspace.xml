@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8ac76aae-edd8-4a73-b21d-7cadc64492bb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" beforeDir="false" afterPath="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/演示实验/teacher/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/演示实验/teacher/Index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" beforeDir="false" afterPath="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/style/ui-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/style/ui-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/search/Index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,29 +19,112 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="689">
-              <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+            <state relative-caret-position="309">
+              <caret line="71" column="38" lean-forward="true" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/演示实验/teacher/Index.html">
+      <file leaf-file-name="GoodsSearch.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/GoodsSearch.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="177" column="34" lean-forward="true" selection-start-line="177" selection-start-column="34" selection-end-line="177" selection-end-column="34" />
+            <state relative-caret-position="171">
+              <caret line="74" column="20" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewApply.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/演示实验/teacher/NewApply.html">
+      <file leaf-file-name="UseLog.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/UseLog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="189" column="38" lean-forward="true" selection-start-line="189" selection-start-column="38" selection-end-line="189" selection-end-column="38" />
+            <state relative-caret-position="209">
+              <caret line="11" column="44" lean-forward="true" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/search/Index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+              <folding>
+                <element signature="e#5522#6892#0" />
+                <element signature="e#6902#7477#0" />
+                <element signature="e#7482#8057#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExperimentalManagement.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/experimentalManagement/ExperimentalManagement.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/Index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="422" column="14" lean-forward="true" selection-start-line="422" selection-start-column="14" selection-end-line="422" selection-end-column="14" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#3;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#div#1;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#div#2;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#div#4;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#div#5;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Appraise.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/Appraise.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="73" column="6" selection-start-line="73" selection-start-column="6" selection-end-line="75" selection-end-column="9" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExperimentLog.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/ExperimentLog.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="75" column="9" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LaboratorySetting.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backEnd/basicSetting/LaboratorySetting.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="260" column="48" lean-forward="true" selection-start-line="260" selection-start-column="48" selection-end-line="260" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -51,45 +134,45 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="Vue Single File Component" />
+        <option value="CSS File" />
         <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cell</find>
-      <find>count-item</find>
-      <find>classNameList</find>
-      <find>handleClick</find>
-      <find>dialog-title</find>
-      <find>class-cell-value</find>
-      <find>showClass</find>
-      <find>van-radio</find>
-      <find>van-radio-group</find>
-      <find>handleDialogLocation</find>
-      <find>handleDialogClass</find>
-      <find>currentClass</find>
-      <find>handleDialogBack</find>
-      <find>color-blue</find>
-      <find>locationList</find>
-      <find>arrow-left</find>
-      <find>arrangementObj</find>
-      <find>statusObj</find>
-      <find>handleLesson</find>
-      <find>handleFinish</find>
-      <find>submit-btn</find>
-      <find>color-green</find>
-      <find>arrangement-name</find>
-      <find>arrangement-value</find>
-      <find>confirm-content</find>
-      <find>dialogConfirm</find>
-      <find>arrangement-status</find>
-      <find>type</find>
-      <find>getData</find>
-      <find>swiperB</find>
+      <find>type1</find>
+      <find>message</find>
+      <find>dialogVisible</find>
+      <find>handleType1Item</find>
+      <find>getTableData</find>
+      <find>header-title</find>
+      <find>header</find>
+      <find>handleUp</find>
+      <find>loading</find>
+      <find>container</find>
+      <find>handleDialogConfirm</find>
+      <find>handleDialogConfirmAndUp</find>
+      <find>handleNew</find>
+      <find>my-input</find>
+      <find>dialog-subtitle</find>
+      <find>handleSearch</find>
+      <find>handleDialogSearch</find>
+      <find>box-content</find>
+      <find>handleAdd</find>
+      <find>handleDialogDelete</find>
+      <find>rightLoading</find>
+      <find>handleDown</find>
+      <find>handleEdit</find>
+      <find>handleDelete</find>
+      <find>dialogDeleteShow</find>
+      <find>dialogDeleteConfirm</find>
+      <find>w-150</find>
+      <find>search-part</find>
+      <find>van-hairline--top</find>
+      <find>content</find>
     </findStrings>
     <replaceStrings>
       <replace>dataList</replace>
@@ -99,6 +182,17 @@
       <replace>bad-cell</replace>
       <replace>title-unit</replace>
       <replace>showDialog</replace>
+      <replace>handleEdit</replace>
+      <replace>locationList</replace>
+      <replace>activeType1</replace>
+      <replace>active-type1</replace>
+      <replace>addLaboratoryName</replace>
+      <replace>this.page.currentPage</replace>
+      <replace>dialogClassroomList</replace>
+      <replace>typeList</replace>
+      <replace>handleType1Item</replace>
+      <replace>dialogCabinetList</replace>
+      <replace>w-250</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -107,32 +201,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/零星实验/teacher/Index.vue" />
-        <option value="$PROJECT_DIR$/search/GoodsDetail1.html" />
-        <option value="$PROJECT_DIR$/search/GoodsDetail2.html" />
-        <option value="$PROJECT_DIR$/lib/moment.js" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/AddEquipment.html" />
-        <option value="$PROJECT_DIR$/assets/style/common.css" />
-        <option value="$PROJECT_DIR$/assets/style/ui-style.css" />
-        <option value="$PROJECT_DIR$/零星实验/admin/Equipment.html" />
-        <option value="$PROJECT_DIR$/零星实验/admin/EquipmentList.html" />
-        <option value="$PROJECT_DIR$/演示实验/Index.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Applying.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/ReadyFinish.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Guihuan.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Using.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Readying.html" />
-        <option value="$PROJECT_DIR$/零星实验/teacher/Index.html" />
-        <option value="$PROJECT_DIR$/search/Search.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Experiment.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/AddEquipment.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/EquipmentList.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Pingjia.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Appraisal.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Using.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/Guihuan.html" />
-        <option value="$PROJECT_DIR$/演示实验/teacher/ReadyFinsh.html" />
-        <option value="$PROJECT_DIR$/零星实验/admin/Index.html" />
         <option value="$PROJECT_DIR$/演示实验/admin/Index.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/WriteBorrowTicket.html" />
         <option value="$PROJECT_DIR$/演示实验/admin/WaitReceive.html" />
@@ -154,10 +222,36 @@
         <option value="$PROJECT_DIR$/学生实验/admin/Arrangement2.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/SelectExperiment.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/NewApply.html" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/学生实验/admin/Arrangement1.html" />
         <option value="$PROJECT_DIR$/零星实验/teacher/Tuihui.html" />
         <option value="$PROJECT_DIR$/演示实验/teacher/Index.html" />
+        <option value="$PROJECT_DIR$/后台管理端/test1.html" />
+        <option value="$PROJECT_DIR$/后台管理端/assets/style/commom.css" />
+        <option value="$PROJECT_DIR$/后台管理端/basicSetting/LaboratorySetting.html" />
+        <option value="$PROJECT_DIR$/后台管理端/basicSetting/TypeSetting.html" />
+        <option value="$PROJECT_DIR$/后台管理端/basicSetting/LocationSetting.html" />
+        <option value="$PROJECT_DIR$/后台管理端/test2.html" />
+        <option value="$PROJECT_DIR$/后台管理端/MessageSearch/GoodsSearch.html" />
+        <option value="$PROJECT_DIR$/后台管理端/assets/style/reset.css" />
+        <option value="$PROJECT_DIR$/后台管理端/MessageSearch/UseLog.html" />
+        <option value="$PROJECT_DIR$/后台管理端/MessageSearch/Appraise.html" />
+        <option value="$PROJECT_DIR$/后台管理端/MessageSearch/ExperimentLog.html" />
+        <option value="$PROJECT_DIR$/后台管理端/basicSetting/ImportData.html" />
+        <option value="$PROJECT_DIR$/后台管理端/messageSearch/Appraise.html" />
+        <option value="$PROJECT_DIR$/后台管理端/messageSearch/ExperimentLog.html" />
+        <option value="$PROJECT_DIR$/后台管理端/messageSearch/GoodsSearch.html" />
+        <option value="$PROJECT_DIR$/后台管理端/messageSearch/UseLog.html" />
+        <option value="$PROJECT_DIR$/assets/style/ui-style.css" />
+        <option value="$PROJECT_DIR$/后台管理端/Index.html" />
+        <option value="$PROJECT_DIR$/后台管理端/experimentalManagement/ExperimentalManagement.html" />
+        <option value="$PROJECT_DIR$/backEnd/experimentalManagement/ExperimentalManagement.html" />
+        <option value="$PROJECT_DIR$/backEnd/basicSetting/LaboratorySetting.html" />
+        <option value="$PROJECT_DIR$/backEnd/messageSearch/Appraise.html" />
+        <option value="$PROJECT_DIR$/backEnd/messageSearch/ExperimentLog.html" />
+        <option value="$PROJECT_DIR$/backEnd/messageSearch/GoodsSearch.html" />
+        <option value="$PROJECT_DIR$/backEnd/messageSearch/UseLog.html" />
+        <option value="$PROJECT_DIR$/search/Index.html" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -168,9 +262,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-18" />
-    <option name="width" value="1938" />
-    <option name="height" value="1029" />
+    <option name="x" value="279" />
+    <option name="y" value="78" />
+    <option name="width" value="1296" />
+    <option name="height" value="696" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -189,35 +284,23 @@
             <path>
               <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="template" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="学生实验" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="style" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="学生实验" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="backEnd" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="学生实验" type="462c0819:PsiDirectoryNode" />
-              <item name="teacher" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="演示实验" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="my-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="my-project" type="462c0819:PsiDirectoryNode" />
-              <item name="演示实验" type="462c0819:PsiDirectoryNode" />
-              <item name="teacher" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -240,11 +323,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Learning\my-project\后台管理端\assets\img" />
+      <recent name="C:\Learning\my-project\后台管理端" />
+      <recent name="C:\Learning\my-project\template" />
       <recent name="C:\Learning\my-project\assets\img" />
       <recent name="C:\Learning\my-project\img" />
-      <recent name="C:\Learning\my-project\js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Learning\my-project\后台管理端\assets\style" />
       <recent name="C:\Learning\my-project\演示实验\common" />
       <recent name="C:\Learning\my-project\演示实验\teacher" />
       <recent name="C:\Learning\my-project" />
@@ -279,7 +365,10 @@
       <workItem from="1567428953623" duration="9246000" />
       <workItem from="1567506666156" duration="12744000" />
       <workItem from="1567599220183" duration="10395000" />
-      <workItem from="1567686531927" duration="1953000" />
+      <workItem from="1567686531927" duration="2596000" />
+      <workItem from="1567748856977" duration="55497000" />
+      <workItem from="1568032732652" duration="9081000" />
+      <workItem from="1568722022608" duration="9089000" />
     </task>
     <task id="LOCAL-00001" summary="三个功能模块页面画完">
       <created>1567431930212</created>
@@ -295,26 +384,33 @@
       <option name="project" value="LOCAL" />
       <updated>1567609588656</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="优化了几个点">
+      <created>1567693138286</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1567693138286</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116508000" />
+    <option name="totallyTimeSpent" value="190818000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2217806" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19395867" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.59292036" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32920355" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.19292036" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -333,170 +429,40 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="三个功能模块页面画完" />
     <MESSAGE value="四个功能模块页面画完" />
-    <option name="LAST_COMMIT_MESSAGE" value="四个功能模块页面画完" />
+    <MESSAGE value="优化了几个点" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化了几个点" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/search/data.js" />
-    <entry file="file://$PROJECT_DIR$/search/Index.html">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11495">
-          <caret line="605" column="18" selection-start-line="605" selection-start-column="18" selection-end-line="605" selection-end-column="18" />
+        <state relative-caret-position="1254">
+          <caret line="66" column="42" lean-forward="true" selection-start-line="66" selection-start-column="42" selection-end-line="66" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/common.js" />
-    <entry file="file://$PROJECT_DIR$/lib/lodash.js">
+    <entry file="file://$PROJECT_DIR$/backEnd/experimentalManagement/ExperimentalManagement.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="2375">
+          <caret line="168" column="14" lean-forward="true" selection-start-line="168" selection-start-column="14" selection-end-line="168" selection-end-column="14" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#313543#316766#0" />
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.vue" />
-    <entry file="file://$PROJECT_DIR$/lib/moment.js">
+    <entry file="file://$PROJECT_DIR$/backEnd/Index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        <state relative-caret-position="3762">
+          <caret line="198" column="25" lean-forward="true" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#3;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#4;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#5;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/style/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-38">
-          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/style/ui-style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="32" column="23" lean-forward="true" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Using.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="40" column="25" lean-forward="true" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/admin/EquipmentList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="88" column="72" lean-forward="true" selection-start-line="88" selection-start-column="72" selection-end-line="88" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Guihuan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="41" column="27" selection-start-line="41" selection-start-column="27" selection-end-line="41" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="116" column="10" lean-forward="true" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/search/GoodsDetail2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-779">
-          <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/search/GoodsDetail1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="63" column="33" lean-forward="true" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/search/Search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="177" column="8" selection-start-line="177" selection-start-column="8" selection-end-line="188" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/ReadyFinish.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="77" column="7" lean-forward="true" selection-start-line="77" selection-start-column="7" selection-end-line="87" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/teacher/Using.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="187" column="20" selection-start-line="187" selection-start-column="8" selection-end-line="187" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/teacher/ReadyFinsh.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="150" column="22" lean-forward="true" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/teacher/Guihuan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="231" column="25" lean-forward="true" selection-end-line="243" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/WriteBorrowTicket.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="82" column="9" lean-forward="true" selection-start-line="55" selection-start-column="7" selection-end-line="82" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/admin/WaitReceive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="234" column="10" lean-forward="true" selection-end-line="250" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/admin/Readying.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="124" column="29" lean-forward="true" selection-end-line="229" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/演示实验/admin/Using.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="128" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/admin/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="181" column="19" selection-start-line="181" selection-start-column="16" selection-end-line="181" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/admin/WaitReceive.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="137" column="6" lean-forward="true" selection-start-line="137" selection-start-column="6" selection-end-line="137" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -549,31 +515,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/学生实验/admin/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3268">
-          <caret line="172" column="18" selection-start-line="172" selection-start-column="18" selection-end-line="172" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/common.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="27" column="38" selection-end-line="72" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/学生实验/teacher/BadState.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="95" column="28" lean-forward="true" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/Demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1900">
-          <caret line="100" column="6" lean-forward="true" selection-end-line="133" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -637,12 +582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="346" column="6" lean-forward="true" selection-start-line="346" selection-start-column="6" selection-end-line="346" selection-end-column="6" />
-          <folding>
-            <element signature="n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#local-slide#0;n#local-swiper#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#van-dialog#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#10819#16794#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -660,31 +599,238 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/零星实验/teacher/AddEquipment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="84" column="24" lean-forward="true" selection-start-line="84" selection-start-column="24" selection-end-line="84" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/演示实验/teacher/NewApply.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
+        <state relative-caret-position="3591">
           <caret line="189" column="38" lean-forward="true" selection-start-line="189" selection-start-column="38" selection-end-line="189" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/template/Demo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="689">
-          <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+        <state relative-caret-position="670">
+          <caret line="100" column="6" lean-forward="true" selection-end-line="133" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/common.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="27" column="38" selection-end-line="72" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/style/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-830">
+          <caret line="43" selection-start-line="43" selection-end-line="48" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/admin/EquipmentList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="72" column="12" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="72" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/后台管理端/assets/style/commom.css" />
+    <entry file="file://$PROJECT_DIR$/backEnd/test1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="627">
+          <caret line="45" column="44" lean-forward="true" selection-start-line="45" selection-start-column="44" selection-end-line="45" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/index123.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="180" column="64" lean-forward="true" selection-start-line="180" selection-start-column="15" selection-end-line="180" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/basicSetting/LocationSetting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="34" column="27" lean-forward="true" selection-start-line="29" selection-start-column="12" selection-end-line="34" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/menud(1).html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1414">
+          <caret line="128" column="52" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/test2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="51" column="14" selection-end-line="69" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/basicSetting/TypeSetting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="44" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/assets/style/reset.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4465">
+          <caret line="235" column="20" lean-forward="true" selection-start-line="235" selection-start-column="20" selection-end-line="235" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/basicSetting/ImportData.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5122">
+          <caret line="282" column="20" lean-forward="true" selection-start-line="282" selection-start-column="20" selection-end-line="282" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/style/ui-style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/AddEquipment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="81" column="6" lean-forward="true" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/零星实验/teacher/WriteBorrowTicket.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/演示实验/teacher/Index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="177" column="34" lean-forward="true" selection-start-line="177" selection-start-column="34" selection-end-line="177" selection-end-column="34" />
+        <state relative-caret-position="116">
+          <caret line="180" column="11" lean-forward="true" selection-start-line="180" selection-start-column="11" selection-end-line="180" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/学生实验/admin/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="156" column="42" lean-forward="true" selection-start-line="156" selection-start-column="42" selection-end-line="156" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/experimentalManagement/ExperimentalManagement.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="422" column="14" lean-forward="true" selection-start-line="422" selection-start-column="14" selection-end-line="422" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#3;n#div#0;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#4;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#5;n#el-dialog#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/basicSetting/LaboratorySetting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="260" column="48" lean-forward="true" selection-start-line="260" selection-start-column="48" selection-end-line="260" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/Appraise.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="73" column="6" selection-start-line="73" selection-start-column="6" selection-end-line="75" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/ExperimentLog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="75" column="9" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/GoodsSearch.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="74" column="20" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backEnd/messageSearch/UseLog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="44" lean-forward="true" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/search/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="e#5522#6892#0" />
+            <element signature="e#6902#7477#0" />
+            <element signature="e#7482#8057#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="71" column="38" lean-forward="true" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
         </state>
       </provider>
     </entry>

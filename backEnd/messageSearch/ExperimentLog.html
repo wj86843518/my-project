@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+        .my-input .el-input__inner {
+            border-left: 0px;
+            border-right: 0px;
+            border-top: 0px;
+            border-radius: 0px;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 0px 20px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .table {
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            text-align: right;
+        }
+
+        .dialog .el-dialog {
+            width: 600px;
+        }
+
+        .w-250 {
+            width: 250px !important;
+        }
+
+        .m-l-20 {
+            margin-left: 20px;
+        }
+        .m-l-10 {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">实验日志</p>
+        <div class="content">
+            <div class="header">
+                <div class="header-left">
+                    <el-date-picker
+                            class=" w-250"
+                            size="small"
+                            v-model="date"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择日期">
+                    </el-date-picker>
+                    <el-input class="m-l-20 w-250" size="small" v-model="person" placeholder="人名"
+                              @keyup.enter.native="handleSearch"></el-input>
+                </div>
+                <div class="header-right">
+                    <el-input v-model="searchValue" placeholder="物品名称、编号" size="small" class="w-250"
+                              @keyup.enter.native="handleSearch"></el-input>
+                    <el-button size="small" class="m-l-10" type="primary" @click="handleSearch">搜索</el-button>
+                </div>
+            </div>
+            <div class="table">
+                <el-table :data="tableData" style="width: 100%" border stripe>
+                    <el-table-column prop="date" label="日期" align="center">
+                    </el-table-column>
+                    <el-table-column prop="teacher" label="实验教师" align="center">
+                    </el-table-column>
+                    <el-table-column prop="name" label="实验名称" align="center">
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="pagination"
+                               @size-change="handleSizeChange"
+                               @current-change="handleCurrentChange"
+                               :current-page="page.currentPage"
+                               :page-sizes="[10, 20, 30, 40]"
+                               :page-size="page.pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="total">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			date: '',
+			person: '',
+			searchValue: '',   // 搜索条件  搜索框
+			tableData: [],
+			page: {
+				currentPage: 1,
+				pageSize: 10
+			},
+			total: 0
+		}
+	},
+	mounted () {
+		this.getData()
+	},
+	methods: {
+		getData () {
+			console.log(this.date)
+			console.log(this.person)
+			console.log(this.searchValue)
+			console.log(this.page.currentPage)
+			console.log(this.page.pageSize)
+			// call api
+			this.loading = true
+			this.tableData = [
+				{
+					id: 1,
+					date: '2019-09-10',
+					teacher: '张老师',
+					name: '加速度实验'
+				}
+			]
+			this.total = 50
+			this.loading = false
+		},
+		handleSearch () {
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleSizeChange (val) {
+			this.page.pageSize = val
+			this.getData()
+		},
+		handleCurrentChange (val) {
+			this.page.currentPage = val
+			this.getData()
+		}
+
+	}
+})
+</script>
+</html>

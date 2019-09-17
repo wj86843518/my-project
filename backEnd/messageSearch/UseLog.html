@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../assets/style/reset.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../lib/lodash.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style type="text/css">
+        .my-input .el-input__inner {
+            border-left: 0px;
+            border-right: 0px;
+            border-top: 0px;
+            border-radius: 0px;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .container {
+            flex-grow: 1;
+            background-color: #F8F8F8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+
+        .sub-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            background-color: white;
+            flex-grow: 1;
+            padding: 0px 20px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+
+        .table {
+            flex-grow: 1;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            text-align: right;
+        }
+
+        .dialog .el-dialog {
+            width: 600px;
+        }
+
+        .w-250 {
+            width: 250px;
+        }
+
+        .m-l-20 {
+            margin-left: 20px;
+        }
+        .m-l-10 {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container" v-loading="loading">
+        <p class="sub-title">使用日志</p>
+        <div class="content">
+            <div class="header">
+                <div class="header-left">
+                    <el-select v-model="type1" placeholder="一级类" size="small" class="w-250" @change="type1Change">
+                        <el-option
+                                v-for="(item,key) in type1List"
+                                :key="key"
+                                :label="item.name"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                    <el-select v-model="type2" placeholder="二级类" size="small" class="w-250 m-l-20" @change="type2Change">
+                        <el-option
+                                v-for="(item,key) in type2List"
+                                :key="key"
+                                :label="item.name"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="header-right">
+                    <el-input v-model="searchValue" placeholder="物品名称、编号" size="small" class="w-250"
+                              @keyup.enter.native="handleSearch"></el-input>
+                    <el-button size="small" type="primary" class="m-l-10" @click="handleSearch">搜索</el-button>
+                </div>
+            </div>
+            <div class="table">
+                <el-table :data="tableData" style="width: 100%" border stripe>
+                    <el-table-column prop="type1" label="一级类" align="center">
+                    </el-table-column>
+                    <el-table-column prop="type2" label="二级类" align="center">
+                    </el-table-column>
+                    <el-table-column prop="code" label="编号" align="center">
+                    </el-table-column>
+                    <el-table-column prop="name" label="名称" align="center">
+                    </el-table-column>
+                    <el-table-column prop="unit" label="规格" align="center">
+                    </el-table-column>
+                    <el-table-column prop="counts" label="数量" align="center">
+                    </el-table-column>
+                    <el-table-column prop="date" label="时间" align="center">
+                    </el-table-column>
+                    <el-table-column prop="person" label="人员" align="center">
+                    </el-table-column>
+                    <el-table-column prop="events" label="事件" align="center">
+                    </el-table-column>
+                </el-table>
+                <el-pagination class="pagination"
+                               @size-change="handleSizeChange"
+                               @current-change="handleCurrentChange"
+                               :current-page="page.currentPage"
+                               :page-sizes="[10, 20, 30, 40]"
+                               :page-size="page.pageSize"
+                               layout="total, sizes, prev, pager, next, jumper"
+                               :total="total">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+new Vue({
+	el: '#app',
+	data: function () {
+		return {
+			loading: false,
+			type1: '',  // 搜索条件  一级类  key
+			type1List: [],
+			type2: '',  // 搜索条件  二级类  key
+			type2List: [],
+			searchValue: '',   // 搜索条件  搜索框
+			tableData: [],
+			page: {
+				currentPage: 1,
+				pageSize: 10
+			},
+			total: 0
+		}
+	},
+	mounted () {
+		this.getSearchData()
+		this.getData()
+	},
+	methods: {
+		getSearchData () {
+			this.loading = true
+			// 一级类 下拉框
+			this.type1List = [
+				{name: '一级类1', id: 1, key: '1'},
+				{name: '一级类2', id: 2, key: '2'},
+				{name: '一级类3', id: 3, key: '3'},
+				{name: '一级类4', id: 4, key: '4'}
+			]
+			this.loading = false
+		},
+		getData () {
+			console.log(this.type1)
+			console.log(this.type2)
+			console.log(this.searchValue)
+			console.log(this.page.currentPage)
+			console.log(this.page.pageSize)
+			// call api
+			this.loading = true
+			this.tableData = [
+				{
+					id: 1,
+					type1: '二级类1',
+					key1: '1',
+					type2: '二级类2',
+					key2: '2',
+					code: '234324',
+					name: '小车',
+					unit: '辆',
+					counts: 10,
+					date: '2019-09-10',
+					person: '小红',
+					events: '入库'
+				},
+				{
+					id: 1,
+					type1: '二级类1',
+					key1: '1',
+					type2: '二级类2',
+					key2: '2',
+					code: '234324',
+					name: '小车',
+					unit: '辆',
+					counts: 10,
+					date: '2019-09-10',
+					person: '小红',
+					events: '领用'
+				},
+				{
+					id: 1,
+					type1: '二级类1',
+					key1: '1',
+					type2: '二级类2',
+					key2: '2',
+					code: '234324',
+					name: '小车',
+					unit: '辆',
+					counts: 10,
+					date: '2019-09-10',
+					person: '小红',
+					events: '损坏'
+				}
+			]
+			this.total = 50
+			this.loading = false
+		},
+		type1Change (val) {
+			this.type1 = val
+			this.type2 = ''
+			this.type2List = [
+				{name: '二级类1', id: 1, key: '1'},
+				{name: '二级类2', id: 2, key: '2'},
+				{name: '二级类3', id: 3, key: '3'},
+				{name: '二级类4', id: 4, key: '4'}
+			]
+			this.page.currentPage = 1
+			this.getData()
+		},
+		type2Change (val) {
+			this.type2 = val
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleSearch () {
+			console.log('search')
+			this.page.currentPage = 1
+			this.getData()
+		},
+		handleSizeChange (val) {
+			this.page.pageSize = val
+			this.getData()
+		},
+		handleCurrentChange (val) {
+			this.page.currentPage = val
+			this.getData()
+		}
+
+	}
+})
+</script>
+</html>
