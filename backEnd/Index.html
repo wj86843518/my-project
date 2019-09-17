@@ -64,10 +64,11 @@
 
         .dialog-title {
             height: 80px;
-            background-color: #6390F5;
             padding: 20px;
             display: flex;
             flex-direction: column;
+            background: url('./assets/img/header_bg.png') no-repeat;
+            background-size: 600px 120px;
         }
 
         .dialog-title p {
@@ -77,6 +78,7 @@
 
         .el-dialog {
             width: 600px;
+            border-radius: 10px;
         }
 
         .el-dialog__header {
@@ -230,7 +232,7 @@
 </head>
 <body>
 <div id="app">
-    <el-container class="container">
+    <el-container class="container" v-loading="loading">
         <el-header class="header">
             <p class="header-title">实验室管理后台</p>
             <img class="icon-bg1" src="./assets/img/bg1.png" alt="">
@@ -276,104 +278,108 @@
             <el-main>
                 <iframe :src="menuUrl[menuSelectIndex]" frameborder="0" class="iframe-content"></iframe>
             </el-main>
+            <el-dialog
+                    v-loading="dialogLoading"
+                    :close-on-click-modal="false"
+                    :visible.sync="dialogVisible"
+                    :show-close="false">
+                <div slot="title">
+                    <div class="dialog-title" v-if="step === 1">
+                        <p>欢迎您进入金陵中学物理实验管理后台</p>
+                        <p>首次进入后台，需要您完成如下基础设置，点击下一步即可完成~</p>
+                    </div>
+                    <div class="dialog-title" v-if="step === 2">
+                        <p style="margin: auto">实验器材大类设置</p>
+                    </div>
+                    <div class="dialog-title" v-if="step === 3">
+                        <p style="margin: auto">实验存放地点设置</p>
+                    </div>
+                    <div class="dialog-title" v-if="step === 4">
+                        <p style="margin: auto">设置已完成</p>
+                    </div>
+                </div>
+                <div class="step-1" v-if="step === 1">
+                    <el-card>
+                        <p class="step-title">step1</p>
+                        <div>
+                            <span>请输入实验室数量:</span>
+                            <el-input size="small" class="laboratory-input" v-model="laboratoryCounts"
+                                      placeholder="请输入"></el-input>
+                            <el-button type="primary" size="mini" @click="confirm1">确认</el-button>
+                        </div>
+                    </el-card>
+                    <el-card class="m-t-10">
+                        <p class="step-title">step2</p>
+                        <div>
+                            <span>请输入实验室名称:</span>
+                            <el-input size="small" class="laboratory-input" v-model="laboratoryName"
+                                      placeholder="请输入"></el-input>
+                        </div>
+                    </el-card>
+                </div>
+                <div v-if="step === 2" class="step-2">
+                    <div v-for="(item1, key1) in typeForm" :key="key1" class="m-t-10">
+                        <div class="type-item">
+                            <div class="prefix-class"></div>
+                            <el-input size="small" class="type-input" v-model="item1.name" placeholder="一级类"></el-input>
+                        </div>
+                        <div class="type-group">
+                            <div v-for="(item2, key) in item1.list" :key="key" class="m-t-10">
+                                <el-input size="small" class="type-input" v-model="item2.name"
+                                          placeholder="二级类"></el-input>
+                            </div>
+                            <p class="add-type m-t-10 w-120" @click="addType2(item1.list)"><i
+                                    class="el-icon-circle-plus"></i>
+                                <span>新增二级大类</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="add-type m-t-10 w-120" @click="addType1"><i class="el-icon-circle-plus"></i>
+                            <span>新增一级大类</span></p>
+                    </div>
+                </div>
+                <div v-if="step === 3" class="step-3">
+                    <div v-for="(item1, key1) in classRoomForm" :key="key1" class="m-t-10">
+                        <div class="type-item">
+                            <div class="prefix-class"></div>
+                            <el-input size="small" class="type-input" v-model="item1.name" placeholder="教室"></el-input>
+                        </div>
+                        <div class="type-group">
+                            <div v-for="(item2, key) in item1.list" :key="key" class="m-t-10">
+                                <el-input size="small" class="type-input" v-model="item2.name"
+                                          placeholder="柜名"></el-input>
+                            </div>
+                            <p class="add-type m-t-10 w-100" @click="addCabinet(item1.list)"><i
+                                    class="el-icon-circle-plus"></i>
+                                <span>新增柜名</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="add-type m-t-10 w-100" @click="addClassRoom"><i class="el-icon-circle-plus"></i>
+                            <span>新增教室</span>
+                        </p>
+                    </div>
+                </div>
+                <div v-if="step === 4" class="step-4">
+                    <p>基础设置已经完成，请进入<span class="page-class">器材管理</span>导入器材数据。
+                    </p>
+                </div>
+                <div slot="footer" class="dialog-footer">
+                    <div v-if="step !== 4">
+                        <el-button class="w-100" type="primary" size="mini" @click="handleNext">下一步</el-button>
+                        <el-button size="mini" @click="handleJump">跳过</el-button>
+                    </div>
+                    <div v-if="step === 4">
+                        <el-button class="w-100" type="primary" size="mini" @click="nowImport">现在导入</el-button>
+                        <el-button size="mini" @click="laterImport">稍后导入</el-button>
+                    </div>
+                </div>
+            </el-dialog>
         </el-container>
     </el-container>
-    <el-dialog
-            v-loading="loading"
-            :close-on-click-modal="false"
-            :visible.sync="dialogVisible"
-            :show-close="false">
-        <div slot="title">
-            <div class="dialog-title" v-if="step === 1">
-                <p>欢迎您进入金陵中学物理实验管理后台</p>
-                <p>首次进入后台，需要您完成如下基础设置，点击下一步即可完成~</p>
-            </div>
-            <div class="dialog-title" v-if="step === 2">
-                <p style="margin: auto">实验器材大类设置</p>
-            </div>
-            <div class="dialog-title" v-if="step === 3">
-                <p style="margin: auto">实验存放地点设置</p>
-            </div>
-            <div class="dialog-title" v-if="step === 4">
-                <p style="margin: auto">设置已完成</p>
-            </div>
-        </div>
-        <div class="step-1" v-if="step === 1">
-            <el-card>
-                <p class="step-title">step1</p>
-                <div>
-                    <span>请输入实验室数量:</span>
-                    <el-input size="small" class="laboratory-input" v-model="laboratoryCounts"
-                              placeholder="请输入"></el-input>
-                    <el-button type="primary" size="mini" @click="confirm1">确认</el-button>
-                </div>
-            </el-card>
-            <el-card class="m-t-10">
-                <p class="step-title">step2</p>
-                <div>
-                    <span>请输入实验室名称:</span>
-                    <el-input size="small" class="laboratory-input" v-model="laboratoryName"
-                              placeholder="请输入"></el-input>
-                </div>
-            </el-card>
-        </div>
-        <div v-if="step === 2" class="step-2">
-            <div v-for="(item1, key1) in typeForm" :key="key1" class="m-t-10">
-                <div class="type-item">
-                    <div class="prefix-class"></div>
-                    <el-input size="small" class="type-input" v-model="item1.name" placeholder="一级类"></el-input>
-                </div>
-                <div class="type-group">
-                    <div v-for="(item2, key) in item1.list" :key="key" class="m-t-10">
-                        <el-input size="small" class="type-input" v-model="item2.name" placeholder="二级类"></el-input>
-                    </div>
-                    <p class="add-type m-t-10 w-120" @click="addType2(item1.list)"><i class="el-icon-circle-plus"></i>
-                        <span>新增二级大类</span>
-                    </p>
-                </div>
-            </div>
-
-            <div>
-                <p class="add-type m-t-10 w-120" @click="addType1"><i class="el-icon-circle-plus"></i>
-                    <span>新增一级大类</span></p>
-            </div>
-        </div>
-        <div v-if="step === 3" class="step-3">
-            <div v-for="(item1, key1) in classRoomForm" :key="key1" class="m-t-10">
-                <div class="type-item">
-                    <div class="prefix-class"></div>
-                    <el-input size="small" class="type-input" v-model="item1.name" placeholder="教室"></el-input>
-                </div>
-                <div class="type-group">
-                    <div v-for="(item2, key) in item1.list" :key="key" class="m-t-10">
-                        <el-input size="small" class="type-input" v-model="item2.name" placeholder="柜名"></el-input>
-                    </div>
-                    <p class="add-type m-t-10 w-100" @click="addCabinet(item1.list)"><i class="el-icon-circle-plus"></i>
-                        <span>新增柜名</span>
-                    </p>
-                </div>
-            </div>
-            <div>
-                <p class="add-type m-t-10 w-100" @click="addClassRoom"><i class="el-icon-circle-plus"></i>
-                    <span>新增教室</span>
-                </p>
-            </div>
-        </div>
-        <div v-if="step === 4" class="step-4">
-            <p>基础设置已经完成，请进入<span class="page-class">器材管理</span>导入器材数据。
-            </p>
-        </div>
-        <div slot="footer" class="dialog-footer">
-            <div v-if="step !== 4">
-                <el-button class="w-100" type="primary" size="mini" @click="handleNext">下一步</el-button>
-                <el-button size="mini" @click="handleJump">跳过</el-button>
-            </div>
-            <div v-if="step === 4">
-                <el-button class="w-100" type="primary" size="mini" @click="nowImport">现在导入</el-button>
-                <el-button size="mini" @click="laterImport">稍后导入</el-button>
-            </div>
-        </div>
-    </el-dialog>
 </div>
 </body>
 <script>
@@ -381,7 +387,7 @@ new Vue({
 	el: '#app',
 	data: function () {
 		return {
-			menuSelectIndex: '3-1',
+			menuSelectIndex: '1-1',
 			src: '',
 			menuUrl: {
 				'1-1': 'basicSetting/LaboratorySetting.html',
@@ -394,8 +400,11 @@ new Vue({
 				'2-4': 'messageSearch/ExperimentLog.html',
 				'3-1': 'experimentalManagement/ExperimentalManagement.html',
 			},
-			dialogVisible: false,
 			loading: false,
+			// 是否已经配置过了
+			isFirst: false,
+			dialogVisible: false,
+			dialogLoading: false,
 			step: 1,
 			// step 1  里面的字段
 			laboratoryCounts: '',
@@ -407,8 +416,9 @@ new Vue({
 		}
 	},
 	mounted () {
-		let isFirst = false
-		if (isFirst) this.dialogVisible = true
+		// 是否第一次进入
+		this.getSetting()
+		if (this.isFirst) this.dialogVisible = true
 	},
 	methods: {
 		menuSelect (val) {
@@ -416,9 +426,16 @@ new Vue({
 			if (this.menuSelectIndex == val) return false;
 			this.menuSelectIndex = val
 		},
+		// 获取是否已经配置过
+		getSetting () {
+			// call  api
+			this.loading = true
+			this.isFirst = true
+			this.loading = false
+		},
 		// step1 的确认
 		confirm1 () {
-
+			// 好像并没有什么卵用
 		},
 		// 下一步
 		handleNext () {
@@ -589,11 +606,11 @@ new Vue({
 		},
 		nowImport () {
 			console.log('现在导入')
-			this.loading = true
+			this.dialogLoading = true
 			setTimeout(() => {
 				this.dialogVisible = false
 				this.step = 1
-				this.loading = false
+				this.dialogLoading = false
 			}, 1000)
 		},
 		laterImport () {
